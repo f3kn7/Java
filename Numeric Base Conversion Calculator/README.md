@@ -1,3 +1,3 @@
-![](https://github.com/f3kn7/Java/issues/1#issue-1421211057)
+![CalcAssemblyBases](https://user-images.githubusercontent.com/70611621/197594223-8112f124-ac85-443d-9711-c6be9aef6b5a.png)
 
 
