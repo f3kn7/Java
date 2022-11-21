@@ -1,45 +1,54 @@
-
 package model.entities;
 
 import java.io.Serializable;
+import model.enums.car.Category;
+import model.enums.car.NumberDoors;
+import model.enums.car.NumberPassengers;
+import model.enums.car.Traction;
+import model.enums.car.TransmissionType;
+import model.enums.car.TrunkCapacity;
+import model.enums.car.TypeFuel;
 
 /**
  *
- * @author Felipe Kellermann 
+ * @author Felipe Kellermann
  */
 public class Car implements Serializable {
-    
+
     //Convert object to bytes
     private static final long serialVersionUID = 1L;
-    
+
     //Attributes
     private long id;
     private String dataCadastroCarro;
     private String marca;
     private String modelo;
-    private String categoria;
+    private Category categoria;
     private String ano;
-    private String qntPassageiros;
-    private String qntPortas;
-    private String capPortaMalas;
+    private NumberPassengers qntPassageiros;
+    private NumberDoors qntPortas;
+    private TrunkCapacity capPortaMalas;
     private String motor;
     private String potencia;
-    private String transmissao;
-    private String tipoCombustivel;
+    private Traction tracao;
+    private TransmissionType transmissao;
+    private TypeFuel tipoCombustivel;
+    private String renavam;
     private String codChassi;
     private String placa;
     private double km;
     private double valorAluguel;
     private String observacoes;
-    
+
     //Default constructor
     public Car() {
     }
-    
+
     //Constructor overload
-    public Car(long id, String dataCadastroCarro, String marca, String modelo, String categoria, String ano, String qntPassageiros, String qntPortas, String capPortaMalas, 
-                String motor, String potencia, String transmissao, String tipoCombustivel, String codChassi, String placa, double km, double valorAluguel, String observacoes) {
-        
+    public Car(long id, String dataCadastroCarro, String marca, String modelo, Category categoria, String ano, NumberPassengers qntPassageiros, NumberDoors qntPortas,
+            TrunkCapacity capPortaMalas, String motor, String potencia, Traction tracao, TransmissionType transmissao, TypeFuel tipoCombustivel, String renavam,
+            String codChassi, String placa, double km, double valorAluguel, String observacoes) {
+
         this.id = id;
         this.dataCadastroCarro = dataCadastroCarro;
         this.marca = marca;
@@ -51,15 +60,17 @@ public class Car implements Serializable {
         this.capPortaMalas = capPortaMalas;
         this.motor = motor;
         this.potencia = potencia;
+        this.tracao = tracao;
         this.transmissao = transmissao;
         this.tipoCombustivel = tipoCombustivel;
+        this.renavam = renavam;
         this.codChassi = codChassi;
         this.placa = placa;
         this.km = km;
         this.valorAluguel = valorAluguel;
         this.observacoes = observacoes;
     }
-    
+
     //Get and Set Methods
     public long getId() {
         return id;
@@ -93,11 +104,11 @@ public class Car implements Serializable {
         this.modelo = modelo;
     }
 
-    public String getCategoria() {
+    public Category getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Category categoria) {
         this.categoria = categoria;
     }
 
@@ -109,27 +120,27 @@ public class Car implements Serializable {
         this.ano = ano;
     }
 
-    public String getQntPassageiros() {
+    public NumberPassengers getQntPassageiros() {
         return qntPassageiros;
     }
 
-    public void setQntPassageiros(String qntPassageiros) {
+    public void setQntPassageiros(NumberPassengers qntPassageiros) {
         this.qntPassageiros = qntPassageiros;
     }
 
-    public String getQntPortas() {
+    public NumberDoors getQntPortas() {
         return qntPortas;
     }
 
-    public void setQntPortas(String qntPortas) {
+    public void setQntPortas(NumberDoors qntPortas) {
         this.qntPortas = qntPortas;
     }
 
-    public String getCapPortaMalas() {
+    public TrunkCapacity getCapPortaMalas() {
         return capPortaMalas;
     }
 
-    public void setCapPortaMalas(String capPortaMalas) {
+    public void setCapPortaMalas(TrunkCapacity capPortaMalas) {
         this.capPortaMalas = capPortaMalas;
     }
 
@@ -149,20 +160,36 @@ public class Car implements Serializable {
         this.potencia = potencia;
     }
 
-    public String getTransmissao() {
+    public Traction getTracao() {
+        return tracao;
+    }
+
+    public void setTracao(Traction tracao) {
+        this.tracao = tracao;
+    }
+
+    public TransmissionType getTransmissao() {
         return transmissao;
     }
 
-    public void setTransmissao(String transmissao) {
+    public void setTransmissao(TransmissionType transmissao) {
         this.transmissao = transmissao;
     }
 
-    public String getTipoCombustivel() {
+    public TypeFuel getTipoCombustivel() {
         return tipoCombustivel;
     }
 
-    public void setTipoCombustivel(String tipoCombustivel) {
+    public void setTipoCombustivel(TypeFuel tipoCombustivel) {
         this.tipoCombustivel = tipoCombustivel;
+    }
+
+    public String getRenavam() {
+        return renavam;
+    }
+
+    public void setRenavam(String renavam) {
+        this.renavam = renavam;
     }
 
     public String getCodChassi() {
@@ -204,13 +231,11 @@ public class Car implements Serializable {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
-   
-    
-    //Hash and Equals | comparison by content and not by pointers
 
+    //Hash and Equals | comparison by content and not by pointers
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         return hash;
     }
 
@@ -228,16 +253,15 @@ public class Car implements Serializable {
         final Car other = (Car) obj;
         return this.id == other.id;
     }
-    
-    //toString
 
+    //toString
     @Override
     public String toString() {
         
         StringBuilder sb = new StringBuilder();
         
-        sb.append("CAR\n{");
-        sb.append("id = ").append(id);
+        sb.append("CAR{");
+        sb.append("\nid = ").append(id);
         sb.append(",\n dataCadastroCarro = ").append(dataCadastroCarro);
         sb.append(",\n marca = ").append(marca);
         sb.append(",\n modelo = ").append(modelo);
@@ -248,9 +272,11 @@ public class Car implements Serializable {
         sb.append(",\n capPortaMalas = ").append(capPortaMalas);
         sb.append(",\n motor = ").append(motor);
         sb.append(",\n potencia = ").append(potencia);
+        sb.append(",\n tracao = ").append(tracao);
         sb.append(",\n transmissao = ").append(transmissao);
         sb.append(",\n tipoCombustivel = ").append(tipoCombustivel);
-        sb.append(",\n nrChassi = ").append(codChassi);
+        sb.append(",\n renavam = ").append(renavam);
+        sb.append(",\n codChassi = ").append(codChassi);
         sb.append(",\n placa = ").append(placa);
         sb.append(",\n km = ").append(km);
         sb.append(",\n valorAluguel = ").append(valorAluguel);
@@ -259,5 +285,5 @@ public class Car implements Serializable {
         
         return sb.toString();
     }
-        
+
 }
