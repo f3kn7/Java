@@ -4,7 +4,12 @@
  */
 package view;
 
+import java.util.Date;
 import javax.swing.JOptionPane;
+import model.dao.CarDao;
+import model.dao.DaoFactory;
+import model.entities.Car;
+import model.entities.CarCategory;
 
 /**
  *
@@ -80,6 +85,8 @@ public class CarRegistration extends javax.swing.JFrame {
         jLabel_ano = new javax.swing.JLabel();
         jTextField_ano = new javax.swing.JTextField();
         jLabel_potencia = new javax.swing.JLabel();
+        jLabel_categoria = new javax.swing.JLabel();
+        jComboBox_categoria = new javax.swing.JComboBox<>();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -394,6 +401,19 @@ public class CarRegistration extends javax.swing.JFrame {
         jLabel_potencia.setText("Potencia:");
         getContentPane().add(jLabel_potencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, -1, 30));
 
+        jLabel_categoria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_categoria.setText("Categoria:");
+        getContentPane().add(jLabel_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 250, -1, 30));
+
+        jComboBox_categoria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HATCH", "SEDAM", "SUV" }));
+        jComboBox_categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_categoriaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jComboBox_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 250, 90, 30));
+
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Background.jpg"))); // NOI18N
         background.setText("jLabel1");
         background.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -408,13 +428,49 @@ public class CarRegistration extends javax.swing.JFrame {
 
     private void jButton_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_salvarActionPerformed
 
-         /*if (jCheckBox_masculino.isSelected()) {
-                p.setSexo("Masculino");
-            } else if (jCheckBox_feminino.isSelected()) {
-                p.setSexo("Feminino");
-            } else {
-                JOptionPane.showMessageDialog(this, "Escolha um dos sexos!", "Atencao", JOptionPane.WARNING_MESSAGE);
-            }*/
+        CarDao carDao = DaoFactory.createCarDao();
+
+        Car car = new Car();
+
+        int n = 0;
+        switch (jComboBox_categoria.getSelectedIndex()) {
+            case 0:
+                n = 1;
+                break;
+            case 1:
+                n = 2;
+                break;
+            case 2:
+                n = 3;
+                break;
+            default:
+                break;
+        }
+
+        CarCategory cat = new CarCategory(n, "null");
+
+        car.setMarca(jTextField_marca.getText());
+        car.setModelo(jTextField_modelo.getText());
+        car.setAno(jTextField_ano.getText());
+        car.setCor(jTextField_cor.getText());
+        car.setQntPassageiros((String) jComboBox_qnt_passageiros.getSelectedItem());
+        car.setQntPortas((String) jComboBox_qnt_portas.getSelectedItem());
+        car.setQntPortas((String) jComboBox_qnt_portas.getSelectedItem());
+        car.setCapPortaMalas((String) jComboBox_cap_porta_malas.getSelectedItem());
+        car.setTracao((String) jComboBox_tracao.getSelectedItem());
+        car.setMotor(jTextField_motor.getText());
+        car.setPotencia(jTextField_potencia.getText());
+        car.setTransmissao((String) jComboBox_transmissao.getSelectedItem());
+        car.setTipoCombustivel((String) jComboBox_combustivel.getSelectedItem());
+        car.setPlaca(jTextField_placa.getText());
+        car.setRenavam(jTextField_renavam.getText());
+        car.setCodChassi(jTextField_chassi.getText());
+        car.setKm(Double.parseDouble(jTextField_km.getText()));
+        car.setValorAluguel(Double.parseDouble(jFormattedTextField_valor.getText()));
+        car.setCarCategory(cat);
+
+        carDao.insert(car);     
+
 
     }//GEN-LAST:event_jButton_salvarActionPerformed
 
@@ -434,7 +490,7 @@ public class CarRegistration extends javax.swing.JFrame {
 
         //Botão Limpar:
         //Metodo limpar, limpa todos os campos preenchidos / reseta alguns campos para o dado mais usado!
-         Limpar();
+        Limpar();
     }//GEN-LAST:event_jButton_limparActionPerformed
 
     private void jTextField_motorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_motorActionPerformed
@@ -478,6 +534,10 @@ public class CarRegistration extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextField_marcaActionPerformed
 
+    private void jComboBox_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_categoriaActionPerformed
+
+    }//GEN-LAST:event_jComboBox_categoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -513,8 +573,8 @@ public class CarRegistration extends javax.swing.JFrame {
             }
         });
     }
- 
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JButton jButton_alterar;
@@ -523,6 +583,7 @@ public class CarRegistration extends javax.swing.JFrame {
     private javax.swing.JButton jButton_limpar;
     private javax.swing.JButton jButton_salvar;
     private javax.swing.JComboBox<String> jComboBox_cap_porta_malas;
+    private javax.swing.JComboBox<String> jComboBox_categoria;
     private javax.swing.JComboBox<String> jComboBox_combustivel;
     private javax.swing.JComboBox<String> jComboBox_qnt_passageiros;
     private javax.swing.JComboBox<String> jComboBox_qnt_portas;
@@ -532,6 +593,7 @@ public class CarRegistration extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_Cadastro_de_pessoas;
     private javax.swing.JLabel jLabel_ano;
     private javax.swing.JLabel jLabel_cap_porta_malas;
+    private javax.swing.JLabel jLabel_categoria;
     private javax.swing.JLabel jLabel_chassi;
     private javax.swing.JLabel jLabel_codigo;
     private javax.swing.JLabel jLabel_combustivel;
@@ -571,18 +633,18 @@ public class CarRegistration extends javax.swing.JFrame {
     private javax.swing.JTextField jText_data_cadastro_carro;
     // End of variables declaration//GEN-END:variables
 
- private void Limpar() {
+    private void Limpar() {
 
         //Metodo Limpar: limpa todos os campos preenchidos / reseta alguns campos para o dado mais usado! 
-       
         jTextField_marca.setText("");
         jTextField_modelo.setText("");
         jTextField_ano.setText("");
         jTextField_cor.setText("");
+        jComboBox_categoria.setSelectedIndex(0);
         jComboBox_qnt_passageiros.setSelectedIndex(2);
         jComboBox_qnt_portas.setSelectedIndex(2);
-        jComboBox_cap_porta_malas.setSelectedIndex(-1);
-        jComboBox_tracao.setSelectedIndex(1);
+        jComboBox_cap_porta_malas.setSelectedIndex(1);
+        jComboBox_tracao.setSelectedIndex(0);
         jTextField_motor.setText("");
         jTextField_potencia.setText("");
         jComboBox_transmissao.setSelectedIndex(0);
@@ -593,12 +655,8 @@ public class CarRegistration extends javax.swing.JFrame {
         jTextField_km.setText("");
         jFormattedTextField_valor.setText("");
         jTextArea_obs_carro.setText("");
-        
+
         jTextField_marca.requestFocus();
- }
-
-
+    }
 
 }
-
-

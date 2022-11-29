@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.dao.CarDao;
 import model.entities.Car;
 import model.entities.CarCategory;
@@ -62,7 +63,11 @@ public class CarDaoJDBC implements CarDao {
             int rowsAffected = st.executeUpdate();
 
             if (rowsAffected > 0) {
+                
+                 JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+                 
                 ResultSet rs = st.getGeneratedKeys();
+                
                 if (rs.next()) {
                     int id = rs.getInt(1);
                     obj.setIdCar(id);
