@@ -1,10 +1,10 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import model.enums.car.Category;
 import model.enums.car.NumberDoors;
 import model.enums.car.NumberPassengers;
-import model.enums.car.Traction;
 import model.enums.car.TransmissionType;
 import model.enums.car.TrunkCapacity;
 import model.enums.car.TypeFuel;
@@ -19,20 +19,20 @@ public class Car implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //Attributes
-    private long id;
+    private Integer idCar;
     private String dataCadastroCarro;
     private String marca;
     private String modelo;
-    private Category categoria;
     private String ano;
-    private NumberPassengers qntPassageiros;
-    private NumberDoors qntPortas;
-    private TrunkCapacity capPortaMalas;
+    private String cor;
+    private String qntPassageiros;
+    private String qntPortas;
+    private String capPortaMalas;
+    private String tracao;
     private String motor;
     private String potencia;
-    private Traction tracao;
-    private TransmissionType transmissao;
-    private TypeFuel tipoCombustivel;
+    private String transmissao;
+    private String tipoCombustivel;
     private String renavam;
     private String codChassi;
     private String placa;
@@ -40,27 +40,29 @@ public class Car implements Serializable {
     private double valorAluguel;
     private String observacoes;
 
+    private CarCategory carCategory;
+
     //Default constructor
     public Car() {
     }
 
     //Constructor overload
-    public Car(long id, String dataCadastroCarro, String marca, String modelo, Category categoria, String ano, NumberPassengers qntPassageiros, NumberDoors qntPortas,
-            TrunkCapacity capPortaMalas, String motor, String potencia, Traction tracao, TransmissionType transmissao, TypeFuel tipoCombustivel, String renavam,
-            String codChassi, String placa, double km, double valorAluguel, String observacoes) {
+    public Car(Integer idCar, String dataCadastroCarro, String marca, String modelo, String ano, String cor, String qntPassageiros, String qntPortas, String capPortaMalas,
+            String tracao, String motor, String potencia, String transmissao, String tipoCombustivel, String renavam, String codChassi, String placa, double km,
+            double valorAluguel, String observacoes, CarCategory carCategory) {
 
-        this.id = id;
+        this.idCar = idCar;
         this.dataCadastroCarro = dataCadastroCarro;
         this.marca = marca;
         this.modelo = modelo;
-        this.categoria = categoria;
         this.ano = ano;
+        this.cor = cor;
         this.qntPassageiros = qntPassageiros;
         this.qntPortas = qntPortas;
         this.capPortaMalas = capPortaMalas;
+        this.tracao = tracao;
         this.motor = motor;
         this.potencia = potencia;
-        this.tracao = tracao;
         this.transmissao = transmissao;
         this.tipoCombustivel = tipoCombustivel;
         this.renavam = renavam;
@@ -69,15 +71,16 @@ public class Car implements Serializable {
         this.km = km;
         this.valorAluguel = valorAluguel;
         this.observacoes = observacoes;
+        this.carCategory = carCategory;
     }
 
     //Get and Set Methods
-    public long getId() {
-        return id;
+    public Integer getIdCar() {
+        return idCar;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdCar(Integer idCar) {
+        this.idCar = idCar;
     }
 
     public String getDataCadastroCarro() {
@@ -104,14 +107,6 @@ public class Car implements Serializable {
         this.modelo = modelo;
     }
 
-    public Category getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Category categoria) {
-        this.categoria = categoria;
-    }
-
     public String getAno() {
         return ano;
     }
@@ -120,28 +115,44 @@ public class Car implements Serializable {
         this.ano = ano;
     }
 
-    public NumberPassengers getQntPassageiros() {
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public String getQntPassageiros() {
         return qntPassageiros;
     }
 
-    public void setQntPassageiros(NumberPassengers qntPassageiros) {
+    public void setQntPassageiros(String qntPassageiros) {
         this.qntPassageiros = qntPassageiros;
     }
 
-    public NumberDoors getQntPortas() {
+    public String getQntPortas() {
         return qntPortas;
     }
 
-    public void setQntPortas(NumberDoors qntPortas) {
+    public void setQntPortas(String qntPortas) {
         this.qntPortas = qntPortas;
     }
 
-    public TrunkCapacity getCapPortaMalas() {
+    public String getCapPortaMalas() {
         return capPortaMalas;
     }
 
-    public void setCapPortaMalas(TrunkCapacity capPortaMalas) {
+    public void setCapPortaMalas(String capPortaMalas) {
         this.capPortaMalas = capPortaMalas;
+    }
+
+    public String getTracao() {
+        return tracao;
+    }
+
+    public void setTracao(String tracao) {
+        this.tracao = tracao;
     }
 
     public String getMotor() {
@@ -160,27 +171,19 @@ public class Car implements Serializable {
         this.potencia = potencia;
     }
 
-    public Traction getTracao() {
-        return tracao;
-    }
-
-    public void setTracao(Traction tracao) {
-        this.tracao = tracao;
-    }
-
-    public TransmissionType getTransmissao() {
+    public String getTransmissao() {
         return transmissao;
     }
 
-    public void setTransmissao(TransmissionType transmissao) {
+    public void setTransmissao(String transmissao) {
         this.transmissao = transmissao;
     }
 
-    public TypeFuel getTipoCombustivel() {
+    public String getTipoCombustivel() {
         return tipoCombustivel;
     }
 
-    public void setTipoCombustivel(TypeFuel tipoCombustivel) {
+    public void setTipoCombustivel(String tipoCombustivel) {
         this.tipoCombustivel = tipoCombustivel;
     }
 
@@ -232,6 +235,14 @@ public class Car implements Serializable {
         this.observacoes = observacoes;
     }
 
+    public CarCategory getCarCategory() {
+        return carCategory;
+    }
+
+    public void setCarCategory(CarCategory carCategory) {
+        this.carCategory = carCategory;
+    }
+
     //Hash and Equals | comparison by content and not by pointers
     @Override
     public int hashCode() {
@@ -251,28 +262,28 @@ public class Car implements Serializable {
             return false;
         }
         final Car other = (Car) obj;
-        return this.id == other.id;
+        return Objects.equals(this.idCar, other.idCar);
     }
 
     //toString
     @Override
     public String toString() {
-        
+
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append("CAR{");
-        sb.append("\nid = ").append(id);
+        sb.append("\nid = ").append(idCar);
         sb.append(",\n dataCadastroCarro = ").append(dataCadastroCarro);
         sb.append(",\n marca = ").append(marca);
         sb.append(",\n modelo = ").append(modelo);
-        sb.append(",\n categoria = ").append(categoria);
         sb.append(",\n ano = ").append(ano);
+        sb.append(",\n cor = ").append(cor);
         sb.append(",\n qntPassageiros = ").append(qntPassageiros);
         sb.append(",\n qntPortas = ").append(qntPortas);
         sb.append(",\n capPortaMalas = ").append(capPortaMalas);
+        sb.append(",\n tracao = ").append(tracao);
         sb.append(",\n motor = ").append(motor);
         sb.append(",\n potencia = ").append(potencia);
-        sb.append(",\n tracao = ").append(tracao);
         sb.append(",\n transmissao = ").append(transmissao);
         sb.append(",\n tipoCombustivel = ").append(tipoCombustivel);
         sb.append(",\n renavam = ").append(renavam);
@@ -281,8 +292,9 @@ public class Car implements Serializable {
         sb.append(",\n km = ").append(km);
         sb.append(",\n valorAluguel = ").append(valorAluguel);
         sb.append(",\n observacoes = ").append(observacoes);
+        sb.append(",\n carCategory = ").append(carCategory);
         sb.append('}');
-        
+
         return sb.toString();
     }
 

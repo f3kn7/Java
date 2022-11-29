@@ -1,18 +1,16 @@
 package application;
 
-import db.DB;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import model.dao.CarCategoryDao;
+import model.dao.CarDao;
+import model.dao.DaoFactory;
 import model.entities.Car;
-import model.entities.Person;
+import model.entities.CarCategory;
 
 public class Program {
 
     public static void main(String[] args) {
 
-       /* Connection conn = null; // Criando uma variavel do tipo connection nula (é uma sessão entre um aplicativo Java e um banco de dados. Ajuda a estabelecer uma conexão com o banco de dados
+        /* Connection conn = null; // Criando uma variavel do tipo connection nula (é uma sessão entre um aplicativo Java e um banco de dados. Ajuda a estabelecer uma conexão com o banco de dados
         Statement st = null; // Criando variavel statement (Statement é uma interface utilizada para executar instruções SQL.)
         ResultSet rs = null; // O Resultset é uma classe da API JAVA que permite percorrermos um DataTable de alguma consulta em um banco de dados.
 
@@ -22,10 +20,10 @@ public class Program {
 
             st = conn.createStatement();
 
-            rs = st.executeQuery("select * from pessoa"); // Executa uma instrução SQL que retorna um único objeto ResultSet
+            rs = st.executeQuery("SELECT * FROM departamento"); // Executa uma instrução SQL que retorna um único objeto ResultSet
 
             while (rs.next()) {
-                System.out.println(rs.getInt("id_pessoa") + ", " + rs.getString("nome") + ", " + rs.getString("telefone_comercial"));
+                System.out.println(rs.getInt("id_departamento") + ", " + rs.getString("nome"));
             }
         } catch (SQLException e) {
             
@@ -35,19 +33,31 @@ public class Program {
             DB.closeResultSet(rs);
             DB.closeStatement(st);
             DB.closeConnection();
-        }*/
+        }             
+        
+                
+        DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
+        
+        Department d = new Department(4, "Lixos");
 
-       //test person
-       Person p = new Person(1, "10/11/2022", "adm", "m", "Felipe", "07/09/1988", "12321344234", "12321344", "N/A", "1231234213", "AB", "51-123123", "N/A", "51-123213123", "51-132123123", "fk@gmail.com", "300300", "Linda", "N/A", "900", "Vila", "Porto Alegre", "RS", "Brasil");
-       
-       System.out.println(p);
-     
-       
-       //test car
-       Car c = new Car(1, "17/11/2022", "GM", "Onix", "Hatch", "2022", "4", "4", "medio", "1.0 turbo", "120cv", "automatica", "gas/alcool", "12312323424", "ufcg12323", 123234123, 100, "blablabla");
-       
-       System.out.println(c);
-     
+        departmentDao.insert(d);
+
+        System.out.println(d);*/
+        // ClientNaturalDao clientNaturalDao = DaoFactory.createClientNaturalDao();
+        CarDao carDao = DaoFactory.createCarDao();
+
+        //ClientNatural cn = new ClientNatural("Masculino", "20/10/2011", "123123", "123123", "123123312", 1, "20/10/2022", "Leonardo", "123213", "1232131321", "123123231", "fern@gmail.com", "1231213", "lima", "na", "1234", "liminha", "rosas", "rs", "br", "bli");
+       // CarCategoryDao carCategoryDao = DaoFactory.createCarCategoryDao();
+
+        CarCategory cat = new CarCategory(3, "null");
+
+        Car car = new Car(1, "12/1/2012", "gm", "Tracker", "2010", "branco", "5", "4", "Medio", "Dianteira", "1.0", "100", "Automatico", "Gas/Alcool", "12322313", "123231313", "1232123dffg", 0, 120, "blablabla", cat);
+        //clientNaturalDao.insert(cn);
+        //clientNaturalDao.deleteById(34);
+        // = clientNaturalDao.findById(38);
+        carDao.insert(car);
+        //System.out.println(car);
+
     }
-       
+
 }

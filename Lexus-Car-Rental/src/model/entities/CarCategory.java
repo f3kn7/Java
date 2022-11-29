@@ -7,29 +7,17 @@ import java.util.Objects;
  *
  * @author Felipe Kellermann 
  */
-public class Department {
+public class CarCategory {
     
-    private Integer id;
-    private String nome;    
+    private Integer idCategoria;
+    private String nome;
 
-    //Default Constructor
-    public Department() {
+    public CarCategory() {
     }
 
-    //Constructor Overload
-    public Department(Integer id, String nome) {
-        this.id = id;
+    public CarCategory(Integer idCategoria, String nome) {
+        this.idCategoria = idCategoria;
         this.nome = nome;
-   
-    }
-   
-    //Get and Set Methods
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -40,12 +28,19 @@ public class Department {
         this.nome = nome;
     }
 
-    //Hash and Equals | comparison by content (not by pointers)
+    public Integer getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.nome);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.idCategoria);
+        hash = 89 * hash + Objects.hashCode(this.nome);
         return hash;
     }
 
@@ -60,26 +55,24 @@ public class Department {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Department other = (Department) obj;
+        final CarCategory other = (CarCategory) obj;
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
-        return Objects.equals(this.id, other.id);
-    }    
-    
-    //toString    
+        return Objects.equals(this.idCategoria, other.idCategoria);
+    }
+
     @Override
     public String toString() {
-        
         StringBuilder sb = new StringBuilder();
-        
-        sb.append("DEPARTMENT{");
-        sb.append("\nid = ").append(id);
+        sb.append("CarCategory{");
+        sb.append("\nidCategoria = ").append(idCategoria);
         sb.append(",\n nome = ").append(nome);
         sb.append('}');
-        
         return sb.toString();
     }
+    
+    
     
     
 }
