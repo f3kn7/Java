@@ -4,6 +4,8 @@ import db.DB;
 import model.dao.impl.CarCategoryJDBC;
 import model.dao.impl.CarDaoJDBC;
 import model.dao.impl.ClientNaturalJDBC;
+import model.dao.impl.RentalDaoJDBC;
+
 
 /**
  * Classe de operações estaticas para instanciar o objeto de acesso a dados (
@@ -25,5 +27,9 @@ public class DaoFactory {
 
         return new CarCategoryJDBC(DB.getConnection());
     }
+    
+    public static RentalDao createRentalDao() { //PARA NÃO EXPOR A IMPLEMENTAÇÃO, DEIXAR APENAS A INTERFACE (INJEÇÃO DE DEPENDENCIA)
 
+        return new RentalDaoJDBC(DB.getConnection());
+    }
 }

@@ -7,8 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import model.dao.ClientNaturalDao;
 import model.entities.ClientNatural;
@@ -29,8 +31,6 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
     public void insert(ClientNatural obj) {
 
         PreparedStatement st = null;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
             st = conn.prepareStatement(
@@ -144,7 +144,7 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
             rs = st.executeQuery();
             if (rs.next()) {
                 ClientNatural obj = instanteatePessoaClient(rs);
-                ClientNatural objc = instanteateClientNatural(rs);
+               
 
             }
             return null;
@@ -158,10 +158,43 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
 
     @Override
     public List<ClientNatural> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        PreparedStatement st = null;
+
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM pessoa, c_fisico WHERE id_pessoa = id_fisico");
+
+            rs = st.executeQuery();
+
+            List<ClientNatural> list = new ArrayList<>();
+            Map<Integer, ClientNatural> map = new HashMap<>();
+
+            while (rs.next()) {
+
+                ClientNatural cli = map.get(rs.getInt("id_pessoa"));
+
+                if (cli == null) {
+
+                    cli = instanteatePessoaClient(rs);
+                    map.put(rs.getInt("id_pessoa"), cli);
+                    map.put(rs.getInt("id_fisico"), cli);
+                }
+                cli = instanteatePessoaClient(rs);
+                list.add(cli);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
 
-    private ClientNatural instanteatePessoaClient(ResultSet rs) throws SQLException { //toDo
+    private ClientNatural instanteatePessoaClient(ResultSet rs) throws SQLException { // ------> toDo
 
         ClientNatural obj = new ClientNatural();
 
@@ -181,15 +214,6 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
         obj.setEstado(rs.getString("estado"));
         obj.setPais(rs.getString("pais"));
         obj.setObservacao(rs.getString("observacao"));
-
-        return obj;
-
-    }
-
-    private ClientNatural instanteateClientNatural(ResultSet rs) throws SQLException {
-
-        ClientNatural obj = new ClientNatural();
-
         obj.setIdPessoa(rs.getInt("id_fisico"));
         obj.setSexo(rs.getString("sexo"));
         obj.setDataNascimento(rs.getString("data_nascimento"));
@@ -198,6 +222,7 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
         obj.setCnh(rs.getString("cnh"));
 
         return obj;
+
     }
 
 }

@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import model.dao.CarDao;
 import model.entities.Car;
-import model.entities.CarCategory;
 
 /**
  *
@@ -39,7 +38,6 @@ public class CarDaoJDBC implements CarDao {
                     + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
 
-            
             st.setString(1, obj.getMarca());
             st.setString(2, obj.getModelo());
             st.setString(3, obj.getAno());
@@ -63,11 +61,11 @@ public class CarDaoJDBC implements CarDao {
             int rowsAffected = st.executeUpdate();
 
             if (rowsAffected > 0) {
-                
-                 JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
-                 
+
+                JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+
                 ResultSet rs = st.getGeneratedKeys();
-                
+
                 if (rs.next()) {
                     int id = rs.getInt(1);
                     obj.setIdCar(id);
@@ -76,8 +74,13 @@ public class CarDaoJDBC implements CarDao {
                 throw new DbException("Unexpected error! No rows affected!");
             }
         } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
             throw new DbException(e.getMessage());
+
         } finally {
+
             DB.closeStatement(st);
         }
     }
@@ -100,6 +103,35 @@ public class CarDaoJDBC implements CarDao {
     @Override
     public List<Car> findAll() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void getValueFromModelCar(Car obj) {
+
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "SELECT DISTINCT valor_aluguel FROM carro WHERE modelo = ?");
+
+            st.setString(1, obj.getModelo());
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+
+              obj.setValorAluguel(rs.getDouble("valor_aluguel"));
+
+            }
+            
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+
     }
 
 }

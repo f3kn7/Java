@@ -12,25 +12,28 @@ import java.util.logging.Logger;
  */
 public class Rental {
 
+    private Integer idAluguel;
+    private Date dataRetirada;
+    private Date dataDevolucao;
+    private double valorTotal;
+
     private Car carro;
     private ClientNatural pessoaFisica;
 
-    private Integer idAluguel;
-    private Date dataRetirada;
-    private Date horaRetirada;
-    private Date dataDevolucao;
-    private Date horaDevolucao;
-    private double valorTotal;
+    public Rental() {
+    }
 
-    public Rental(Car carro, ClientNatural pessoaFisica, Integer idAluguel, String dataRetirada, String horaRetirada, String dataDevolucao, String horaDevolucao, double valorTotal) {
+    public Rental(Integer idAluguel) {
+        this.idAluguel = idAluguel;
+    }
+
+    public Rental(Car carro, ClientNatural pessoaFisica, Integer idAluguel, String dataRetirada, String dataDevolucao, double valorTotal) {
         try {
             this.carro = carro;
             this.pessoaFisica = pessoaFisica;
             this.idAluguel = idAluguel;
-            this.dataRetirada = new SimpleDateFormat("dd/MM/yyyy").parse(dataRetirada);
-            this.horaRetirada = new SimpleDateFormat("HH:mm").parse(horaRetirada);
-            this.dataDevolucao = new SimpleDateFormat("dd/MM/yyyy").parse(dataDevolucao);
-            this.horaDevolucao = new SimpleDateFormat("HH:mm").parse(horaDevolucao);
+            this.dataRetirada = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dataRetirada);
+            this.dataDevolucao = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dataDevolucao);
             this.valorTotal = valorTotal;
 
         } catch (ParseException ex) {
@@ -71,28 +74,12 @@ public class Rental {
         this.dataRetirada = dataRetirada;
     }
 
-    public Date getHoraRetirada() {
-        return horaRetirada;
-    }
-
-    public void setHoraRetirada(Date horaRetirada) {
-        this.horaRetirada = horaRetirada;
-    }
-
     public Date getDataDevolucao() {
         return dataDevolucao;
     }
 
     public void setDataDevolucao(Date dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
-    }
-
-    public Date getHoraDevolucao() {
-        return horaDevolucao;
-    }
-
-    public void setHoraDevolucao(Date horaDevolucao) {
-        this.horaDevolucao = horaDevolucao;
     }
 
     public double getValorTotal() {
@@ -103,6 +90,4 @@ public class Rental {
         this.valorTotal = valorTotal;
     }
 
-    
-    
 }

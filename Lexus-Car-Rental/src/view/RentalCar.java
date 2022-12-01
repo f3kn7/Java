@@ -4,18 +4,33 @@
  */
 package view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.dao.CarDao;
+import model.dao.ClientNaturalDao;
+import model.dao.DaoFactory;
+import model.dao.RentalDao;
+import model.entities.Car;
+import model.entities.ClientNatural;
+import model.entities.Rental;
 
 /**
  *
  * @author Felipe Kellermann Wo
  */
-public class Rental extends javax.swing.JFrame {
+public class RentalCar extends javax.swing.JFrame {
 
     /**
      * Creates new form PersonRegistration
      */
-    public Rental() {
+    public RentalCar() {
         initComponents();
         desabilitarComboBox();
     }
@@ -32,7 +47,7 @@ public class Rental extends javax.swing.JFrame {
         jLabel_aluguel = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jButton_salvar = new javax.swing.JButton();
-        jButton_consultar = new javax.swing.JButton();
+        jButton_calcular = new javax.swing.JButton();
         jButton_alterar = new javax.swing.JButton();
         jButton_excluir = new javax.swing.JButton();
         jButton_limpar = new javax.swing.JButton();
@@ -53,19 +68,29 @@ public class Rental extends javax.swing.JFrame {
         jLabel_suv = new javax.swing.JLabel();
         jComboBox_modelo_carro_sedam = new javax.swing.JComboBox<>();
         jComboBox_modelo_carro_suv = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel_cliente = new javax.swing.JLabel();
         jFormattedTextField_data_retirada = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jFormattedTextField_data_devolucao = new javax.swing.JFormattedTextField();
         jComboBox_Cliente = new javax.swing.JComboBox();
+        jButton_consultar = new javax.swing.JButton();
+        jLabel_categoria_escolhida = new javax.swing.JLabel();
+        jLabel_categoria = new javax.swing.JLabel();
+        jLabel_veiculo = new javax.swing.JLabel();
+        jLabel_veiculo_escolhido = new javax.swing.JLabel();
+        jLabel_valor_diaria = new javax.swing.JLabel();
+        jLabel_vlr_diaria = new javax.swing.JLabel();
+        jLabel_total_diarias = new javax.swing.JLabel();
+        jLabel_diarias = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1040, 684));
         setName("background"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1040, 684));
+        setPreferredSize(new java.awt.Dimension(1040, 720));
         setResizable(false);
-        setSize(new java.awt.Dimension(1026, 684));
+        setSize(new java.awt.Dimension(1040, 684));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel_aluguel.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
@@ -88,19 +113,17 @@ public class Rental extends javax.swing.JFrame {
         });
         getContentPane().add(jButton_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 210, 130, -1));
 
-        jButton_consultar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_consultar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton_consultar.setForeground(new java.awt.Color(204, 204, 204));
-        jButton_consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/search.png"))); // NOI18N
-        jButton_consultar.setText("Consultar");
-        jButton_consultar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton_consultar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton_consultar.addActionListener(new java.awt.event.ActionListener() {
+        jButton_calcular.setBackground(new java.awt.Color(0, 0, 0));
+        jButton_calcular.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_calcular.setForeground(new java.awt.Color(204, 204, 204));
+        jButton_calcular.setText("Calcular");
+        jButton_calcular.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton_calcular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_consultarActionPerformed(evt);
+                jButton_calcularActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_consultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 260, 130, -1));
+        getContentPane().add(jButton_calcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 610, 140, 40));
 
         jButton_alterar.setBackground(new java.awt.Color(0, 0, 0));
         jButton_alterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -183,10 +206,25 @@ public class Rental extends javax.swing.JFrame {
         getContentPane().add(jCheckBox_hatch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, -1, -1));
 
         jComboBox_modelo_carro_hatch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Onix", "Sandero" }));
+        jComboBox_modelo_carro_hatch.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_modelo_carro_hatchItemStateChanged(evt);
+            }
+        });
+        jComboBox_modelo_carro_hatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_modelo_carro_hatchActionPerformed(evt);
+            }
+        });
         getContentPane().add(jComboBox_modelo_carro_hatch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, 200, 30));
 
-        jFormattedTextField_valor.setText("120");
+        jFormattedTextField_valor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         jFormattedTextField_valor.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jFormattedTextField_valor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField_valorActionPerformed(evt);
+            }
+        });
         getContentPane().add(jFormattedTextField_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 560, 140, 35));
 
         jLabel_hatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/hatch.jpg"))); // NOI18N
@@ -195,7 +233,7 @@ public class Rental extends javax.swing.JFrame {
         jLabel_valor.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel_valor.setText("Valor Total Aluguel R$:");
         getContentPane().add(jLabel_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 540, 140, 20));
-        getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 534, 815, 20));
+        getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 815, 20));
 
         jCheckBox_sedam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,36 +256,61 @@ public class Rental extends javax.swing.JFrame {
         getContentPane().add(jLabel_suv, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, 200, 190));
 
         jComboBox_modelo_carro_sedam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Voyage", "Ka Sedam" }));
+        jComboBox_modelo_carro_sedam.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_modelo_carro_sedamItemStateChanged(evt);
+            }
+        });
+        jComboBox_modelo_carro_sedam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_modelo_carro_sedamActionPerformed(evt);
+            }
+        });
         getContentPane().add(jComboBox_modelo_carro_sedam, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 460, 200, 30));
 
         jComboBox_modelo_carro_suv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duster", "Spin" }));
+        jComboBox_modelo_carro_suv.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_modelo_carro_suvItemStateChanged(evt);
+            }
+        });
+        jComboBox_modelo_carro_suv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_modelo_carro_suvActionPerformed(evt);
+            }
+        });
         getContentPane().add(jComboBox_modelo_carro_suv, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 460, 200, 30));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("Cliente:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 80, 20));
+        jLabel_cliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_cliente.setText("Cliente:");
+        getContentPane().add(jLabel_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 80, 20));
 
         try {
             jFormattedTextField_data_retirada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField_data_retirada.setText("01122020");
+        jFormattedTextField_data_retirada.setText("02/12/2020");
         jFormattedTextField_data_retirada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jFormattedTextField_data_retirada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField_data_retiradaActionPerformed(evt);
             }
         });
-        getContentPane().add(jFormattedTextField_data_retirada, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 560, 100, 30));
+        jFormattedTextField_data_retirada.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFormattedTextField_data_retiradaKeyTyped(evt);
+            }
+        });
+        getContentPane().add(jFormattedTextField_data_retirada, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 550, 100, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Retirada:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 540, -1, 20));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 530, -1, 20));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Devolução:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 540, -1, 20));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, -1, 20));
 
         try {
             jFormattedTextField_data_devolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -256,9 +319,74 @@ public class Rental extends javax.swing.JFrame {
         }
         jFormattedTextField_data_devolucao.setText("05122020");
         jFormattedTextField_data_devolucao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        getContentPane().add(jFormattedTextField_data_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 560, 100, 30));
+        jFormattedTextField_data_devolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField_data_devolucaoActionPerformed(evt);
+            }
+        });
+        jFormattedTextField_data_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jFormattedTextField_data_devolucaoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFormattedTextField_data_devolucaoKeyTyped(evt);
+            }
+        });
+        getContentPane().add(jFormattedTextField_data_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 620, 100, 30));
 
-        getContentPane().add(jComboBox_Cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, 300, 30));
+        jComboBox_Cliente.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jComboBox_ClienteAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        getContentPane().add(jComboBox_Cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 300, 30));
+
+        jButton_consultar.setBackground(new java.awt.Color(0, 0, 0));
+        jButton_consultar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_consultar.setForeground(new java.awt.Color(204, 204, 204));
+        jButton_consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/search.png"))); // NOI18N
+        jButton_consultar.setText("Consultar");
+        jButton_consultar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton_consultar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton_consultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_consultarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton_consultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 260, 130, -1));
+
+        jLabel_categoria_escolhida.setToolTipText("");
+        jLabel_categoria_escolhida.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel_categoria_escolhida, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, 130, 30));
+
+        jLabel_categoria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_categoria.setText("Categoria escolhida:");
+        getContentPane().add(jLabel_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, -1, 20));
+
+        jLabel_veiculo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_veiculo.setText("Veiculo escolhido:");
+        getContentPane().add(jLabel_veiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 600, -1, 20));
+
+        jLabel_veiculo_escolhido.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel_veiculo_escolhido, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 620, 130, 30));
+
+        jLabel_valor_diaria.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel_valor_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 620, 100, 30));
+
+        jLabel_vlr_diaria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_vlr_diaria.setText("Valor da diaria:");
+        getContentPane().add(jLabel_vlr_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 600, -1, 20));
+
+        jLabel_total_diarias.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel_total_diarias, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, 100, 30));
+
+        jLabel_diarias.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_diarias.setText("Total diarias:");
+        getContentPane().add(jLabel_diarias, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 530, -1, 20));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Background.jpg"))); // NOI18N
         background.setText("jLabel1");
@@ -274,19 +402,72 @@ public class Rental extends javax.swing.JFrame {
 
     private void jButton_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_salvarActionPerformed
 
-         /*if (jCheckBox_masculino.isSelected()) {
-                p.setSexo("Masculino");
-            } else if (jCheckBox_feminino.isSelected()) {
-                p.setSexo("Feminino");
+        RentalDao rentalDao = DaoFactory.createRentalDao();
+
+        try {
+            SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
+
+            Rental rent = new Rental();
+
+            Car car = new Car(4);
+
+            ClientNatural cli = new ClientNatural(38);
+
+            rent.setDataRetirada(form.parse(jFormattedTextField_data_retirada.getText()));
+            rent.setDataDevolucao(form.parse(jFormattedTextField_data_devolucao.getText()));
+            rent.setValorTotal(Double.parseDouble(jFormattedTextField_valor.getText()));
+            rent.setCarro(car);
+            rent.setPessoaFisica(cli);
+
+            if (jCheckBox_hatch.isSelected()) {
+
+                car.setModelo((String) jComboBox_modelo_carro_hatch.getSelectedItem());
+            } else if (jCheckBox_sedam.isSelected()) {
+
+                car.setModelo((String) jComboBox_modelo_carro_sedam.getSelectedItem());
+            } else if (jCheckBox_suv.isSelected()) {
+
+                car.setModelo((String) jComboBox_modelo_carro_suv.getSelectedItem());
             } else {
-                JOptionPane.showMessageDialog(this, "Escolha um dos sexos!", "Atencao", JOptionPane.WARNING_MESSAGE);
-            }*/
+                JOptionPane.showMessageDialog(this, "Escolha o carro!", "Atencao", JOptionPane.WARNING_MESSAGE);
+            }
+            //Inserir aluguel no banco
+            rentalDao.insert(rent);
+
+        } catch (ParseException ex) {
+            Logger.getLogger(RentalCar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
     }//GEN-LAST:event_jButton_salvarActionPerformed
 
-    private void jButton_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_consultarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_consultarActionPerformed
+    private void jButton_calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_calcularActionPerformed
+
+        //Calculando o tempo do aluguel em dias        
+        String data1 = jFormattedTextField_data_retirada.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate ld1 = LocalDate.parse(data1, formatter);
+
+        String data2 = jFormattedTextField_data_devolucao.getText();
+        LocalDate ld2 = LocalDate.parse(data2, formatter);
+
+        Period per = Period.between(ld1, ld2);
+        int dias = per.getDays();
+
+        jLabel_total_diarias.setText(Integer.toString(dias));
+
+        //Calculando o valor R$ total do aluguel
+        double valorAluguel;
+        double result;
+
+        valorAluguel = Double.parseDouble(jLabel_valor_diaria.getText());
+
+        result = valorAluguel * dias;
+
+        jFormattedTextField_valor.setText(Double.toString(result));
+
+
+    }//GEN-LAST:event_jButton_calcularActionPerformed
 
     private void jButton_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_alterarActionPerformed
         // TODO add your handling code here:
@@ -300,7 +481,7 @@ public class Rental extends javax.swing.JFrame {
 
         //Botão Limpar:
         //Metodo limpar, limpa todos os campos preenchidos / reseta alguns campos para o dado mais usado!
-         Limpar();
+        Limpar();
     }//GEN-LAST:event_jButton_limparActionPerformed
 
     private void jText_id_aluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_id_aluguelActionPerformed
@@ -321,6 +502,10 @@ public class Rental extends javax.swing.JFrame {
         jComboBox_modelo_carro_suv.setEnabled(false);
         jComboBox_modelo_carro_sedam.setSelectedIndex(-1);
         jComboBox_modelo_carro_suv.setSelectedIndex(-1);
+        jLabel_categoria_escolhida.setText("HATCH");
+        jFormattedTextField_valor.setText("");
+
+
     }//GEN-LAST:event_jCheckBox_hatchActionPerformed
 
     private void jCheckBox_sedamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_sedamActionPerformed
@@ -333,6 +518,9 @@ public class Rental extends javax.swing.JFrame {
         jComboBox_modelo_carro_suv.setEnabled(false);
         jComboBox_modelo_carro_hatch.setSelectedIndex(-1);
         jComboBox_modelo_carro_suv.setSelectedIndex(-1);
+        jLabel_categoria_escolhida.setText("SEDAM");
+        jFormattedTextField_valor.setText("");
+
     }//GEN-LAST:event_jCheckBox_sedamActionPerformed
 
     private void jCheckBox_suvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_suvActionPerformed
@@ -345,11 +533,87 @@ public class Rental extends javax.swing.JFrame {
         jComboBox_modelo_carro_suv.setEnabled(true);
         jComboBox_modelo_carro_hatch.setSelectedIndex(-1);
         jComboBox_modelo_carro_sedam.setSelectedIndex(-1);
+        jLabel_categoria_escolhida.setText("SUV");
+        jFormattedTextField_valor.setText("");
+
+
     }//GEN-LAST:event_jCheckBox_suvActionPerformed
 
     private void jFormattedTextField_data_retiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField_data_retiradaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField_data_retiradaActionPerformed
+
+    private void jFormattedTextField_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField_valorActionPerformed
+
+
+    }//GEN-LAST:event_jFormattedTextField_valorActionPerformed
+
+    private void jFormattedTextField_data_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField_data_devolucaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField_data_devolucaoActionPerformed
+
+    private void jFormattedTextField_data_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField_data_devolucaoKeyPressed
+
+
+    }//GEN-LAST:event_jFormattedTextField_data_devolucaoKeyPressed
+
+    private void jButton_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_consultarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_consultarActionPerformed
+
+    private void jComboBox_modelo_carro_suvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_suvActionPerformed
+        jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_suv.getSelectedItem());
+    }//GEN-LAST:event_jComboBox_modelo_carro_suvActionPerformed
+
+    private void jComboBox_modelo_carro_sedamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_sedamActionPerformed
+        jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_sedam.getSelectedItem());
+    }//GEN-LAST:event_jComboBox_modelo_carro_sedamActionPerformed
+
+    private void jComboBox_modelo_carro_hatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_hatchActionPerformed
+        jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_hatch.getSelectedItem());
+    }//GEN-LAST:event_jComboBox_modelo_carro_hatchActionPerformed
+
+    private void jComboBox_ClienteAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBox_ClienteAncestorAdded
+
+        //Lotando o comboBox com clientes do banco de dados
+        ClientNaturalDao clientNaturalDao = DaoFactory.createClientNaturalDao();
+
+        List<ClientNatural> lista = clientNaturalDao.findAll();
+
+        jComboBox_Cliente.removeAll();
+
+        for (ClientNatural c : lista) {
+            jComboBox_Cliente.addItem(c.toStringNaturalClient());
+        }
+
+
+    }//GEN-LAST:event_jComboBox_ClienteAncestorAdded
+
+    private void jComboBox_modelo_carro_hatchItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_hatchItemStateChanged
+        pegarValorCarroHatch();
+        jFormattedTextField_valor.setText("");
+    }//GEN-LAST:event_jComboBox_modelo_carro_hatchItemStateChanged
+
+    private void jComboBox_modelo_carro_sedamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_sedamItemStateChanged
+        pegarValorCarroSedam();
+        jFormattedTextField_valor.setText("");
+    }//GEN-LAST:event_jComboBox_modelo_carro_sedamItemStateChanged
+
+    private void jComboBox_modelo_carro_suvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_suvItemStateChanged
+        pegarValorCarroSuv();
+        jFormattedTextField_valor.setText("");
+
+    }//GEN-LAST:event_jComboBox_modelo_carro_suvItemStateChanged
+
+    private void jFormattedTextField_data_retiradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField_data_retiradaKeyTyped
+        jLabel_total_diarias.setText("");
+        jFormattedTextField_valor.setText("");
+    }//GEN-LAST:event_jFormattedTextField_data_retiradaKeyTyped
+
+    private void jFormattedTextField_data_devolucaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField_data_devolucaoKeyTyped
+        jLabel_total_diarias.setText("");
+        jFormattedTextField_valor.setText("");
+    }//GEN-LAST:event_jFormattedTextField_data_devolucaoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -368,14 +632,18 @@ public class Rental extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Rental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RentalCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Rental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RentalCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Rental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RentalCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Rental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RentalCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -384,15 +652,16 @@ public class Rental extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Rental().setVisible(true);
+                new RentalCar().setVisible(true);
             }
         });
     }
- 
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JButton jButton_alterar;
+    private javax.swing.JButton jButton_calcular;
     private javax.swing.JButton jButton_consultar;
     private javax.swing.JButton jButton_excluir;
     private javax.swing.JButton jButton_limpar;
@@ -407,16 +676,24 @@ public class Rental extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField_data_devolucao;
     private javax.swing.JFormattedTextField jFormattedTextField_data_retirada;
     private javax.swing.JFormattedTextField jFormattedTextField_valor;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel_aluguel;
+    private javax.swing.JLabel jLabel_categoria;
+    private javax.swing.JLabel jLabel_categoria_escolhida;
+    private javax.swing.JLabel jLabel_cliente;
     private javax.swing.JLabel jLabel_codigo;
     private javax.swing.JLabel jLabel_data;
+    private javax.swing.JLabel jLabel_diarias;
     private javax.swing.JLabel jLabel_hatch;
     private javax.swing.JLabel jLabel_sedam;
     private javax.swing.JLabel jLabel_suv;
+    private javax.swing.JLabel jLabel_total_diarias;
     private javax.swing.JLabel jLabel_valor;
+    private javax.swing.JLabel jLabel_valor_diaria;
+    private javax.swing.JLabel jLabel_veiculo;
+    private javax.swing.JLabel jLabel_veiculo_escolhido;
+    private javax.swing.JLabel jLabel_vlr_diaria;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
@@ -424,58 +701,71 @@ public class Rental extends javax.swing.JFrame {
     private javax.swing.JTextField jText_id_aluguel;
     // End of variables declaration//GEN-END:variables
 
- private void Limpar(){
-    
-    //Metodo Limpar: limpa todos os campos preenchidos / reseta alguns campos para o dado mais usado e 
-    //tambem executa o metodo desabilitarComboBox
-    
-    jCheckBox_hatch.setSelected(false);
-    jCheckBox_sedam.setSelected(false);
-    jCheckBox_suv.setSelected(false);
-    jComboBox_Cliente.setSelectedIndex(-1);
-    jFormattedTextField_data_retirada.setText("");
-    jFormattedTextField_data_devolucao.setText("");
-    jFormattedTextField_valor.setText("");
-    
-    desabilitarComboBox();
-        
-         
+    private void Limpar() {
+
+        //Metodo Limpar: limpa todos os campos preenchidos / reseta alguns campos para o dado mais usado e 
+        //tambem executa o metodo desabilitarComboBox
+        jCheckBox_hatch.setSelected(false);
+        jCheckBox_sedam.setSelected(false);
+        jCheckBox_suv.setSelected(false);
+        jComboBox_Cliente.setSelectedIndex(-1);
+        jFormattedTextField_data_retirada.setText("");
+        jFormattedTextField_data_devolucao.setText("");
+        jFormattedTextField_valor.setText("");
+        jLabel_total_diarias.setText("");
+        jLabel_valor_diaria.setText("");
+        jLabel_categoria_escolhida.setText("");
+        jLabel_veiculo_escolhido.setText("");
+
+        desabilitarComboBox();
+
+    }
+
+    private void desabilitarComboBox() {
+
+        //Metodo desabilitarComboBox: desabilita e inicia os campos de seleção sem valor nenhum.
+        jComboBox_modelo_carro_hatch.setEnabled(false);
+        jComboBox_modelo_carro_hatch.setSelectedIndex(-1);
+        jComboBox_modelo_carro_sedam.setEnabled(false);
+        jComboBox_modelo_carro_sedam.setSelectedIndex(-1);
+        jComboBox_modelo_carro_suv.setEnabled(false);
+        jComboBox_modelo_carro_suv.setSelectedIndex(-1);
+    }
+
+    private void pegarValorCarroHatch() {
+
+        CarDao carDao = DaoFactory.createCarDao();
+
+        Car car = new Car();
+
+        car.setModelo((String) jComboBox_modelo_carro_hatch.getSelectedItem());
+        carDao.getValueFromModelCar(car);
+        jLabel_valor_diaria.setText(Double.toString(car.getValorAluguel()));
+
+    }
+
+    private void pegarValorCarroSedam() {
+
+        CarDao carDao = DaoFactory.createCarDao();
+
+        Car car = new Car();
+
+        car.setModelo((String) jComboBox_modelo_carro_sedam.getSelectedItem());
+        carDao.getValueFromModelCar(car);
+        jLabel_valor_diaria.setText(Double.toString(car.getValorAluguel()));
+
+    }
+
+    private void pegarValorCarroSuv() {
+
+        CarDao carDao = DaoFactory.createCarDao();
+
+        Car car = new Car();
+
+        car.setModelo((String) jComboBox_modelo_carro_suv.getSelectedItem());
+        carDao.getValueFromModelCar(car);
+        jLabel_valor_diaria.setText(Double.toString(car.getValorAluguel()));
+
+    }
+
 }
-
-private void desabilitarComboBox(){
-    
-    //Metodo desabilitarComboBox: desabilita e inicia os campos de seleção sem valor nenhum.
-    
-    jComboBox_modelo_carro_hatch.setEnabled(false);
-    jComboBox_modelo_carro_hatch.setSelectedIndex(-1);
-    jComboBox_modelo_carro_sedam.setEnabled(false);
-    jComboBox_modelo_carro_sedam.setSelectedIndex(-1);
-    jComboBox_modelo_carro_suv.setEnabled(false);
-    jComboBox_modelo_carro_suv.setSelectedIndex(-1);
-}
-
-/*if (jCheckBox_hatch.isSelected()){
-           
-                a.setModelo_carro((String) jComboBox_modelo_carro_hatch.getSelectedItem());
-            }
-            else if (jCheckBox_sedam.isSelected()){
-                
-                a.setModelo_carro((String) jComboBox_modelo_carro_sedam.getSelectedItem());
-            }
-            else if (jCheckBox_suv.isSelected()){
-                
-                a.setModelo_carro((String) jComboBox_modelo_carro_suv.getSelectedItem());
-            }
-            else {
-                JOptionPane.showMessageDialog(this, "Escolha o carro!", "Atencao", JOptionPane.WARNING_MESSAGE);
-            }
-            
-            a.setNome(jTextField_cliente.getText());
-            a.setData__retirada(jFormattedTextField_data_retirada.getText());
-            a.setData__devolucao(jFormattedTextField_data_devolucao.getText());
-            a.setValor_total_aluguel(Double.parseDouble(jFormattedTextField_valor.getText()));
-
-*/
-}
-
-

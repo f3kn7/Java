@@ -430,24 +430,9 @@ public class CarRegistration extends javax.swing.JFrame {
 
         CarDao carDao = DaoFactory.createCarDao();
 
-        Car car = new Car();
+        Car car = new Car();       
 
-        int n = 0;
-        switch (jComboBox_categoria.getSelectedIndex()) {
-            case 0:
-                n = 1;
-                break;
-            case 1:
-                n = 2;
-                break;
-            case 2:
-                n = 3;
-                break;
-            default:
-                break;
-        }
-
-        CarCategory cat = new CarCategory(n, "null");
+        CarCategory cat = new CarCategory(jComboBox_categoria.getSelectedIndex()+1);
 
         car.setMarca(jTextField_marca.getText());
         car.setModelo(jTextField_modelo.getText());

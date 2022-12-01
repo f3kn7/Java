@@ -41,8 +41,17 @@ public abstract class Person implements Serializable {
     }
 
     //Constructor Overload 
+    public Person(Integer idPessoa) {
+        this.idPessoa = idPessoa;
+    }
 
-    public Person(Integer idPessoa, String dataCadastro, String nome, String telefoneFixo, String celular, String whatsapp, String email, String cep, String rua, 
+    //Contructor Overload
+    public Person(String nome) {
+        this.nome = nome;
+    }
+
+    //Constructor Overload 
+    public Person(Integer idPessoa, String dataCadastro, String nome, String telefoneFixo, String celular, String whatsapp, String email, String cep, String rua,
             String numeroPredioCond, String numeroResidencia, String bairro, String cidade, String Estado, String pais, String observacao) {
         this.idPessoa = idPessoa;
         try {
@@ -65,10 +74,8 @@ public abstract class Person implements Serializable {
         this.pais = pais;
         this.observacao = observacao;
     }
- 
 
     //Get and Set Methods 
-
     public Integer getIdPessoa() {
         return idPessoa;
     }
@@ -76,7 +83,6 @@ public abstract class Person implements Serializable {
     public void setIdPessoa(Integer idPessoa) {
         this.idPessoa = idPessoa;
     }
-    
 
     public Date getDataCadastro() {
         return dataCadastro;
@@ -198,9 +204,6 @@ public abstract class Person implements Serializable {
         this.observacao = observacao;
     }
 
-   
-
-    
     //Hash and Equals | comparison by content (not by pointers) 
     public int hashCode() {
         int hash = 5;

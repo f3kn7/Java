@@ -14,21 +14,32 @@ public class ClientNatural extends Person {
     private String cpf;
     private String cnh;
 
+    //Default Constructor 
     public ClientNatural() {
     }
-    
+
+    //Constructor Overload
+    public ClientNatural(Integer idPessoa) {
+        super(idPessoa);
+    }
+
+    //Constructor Overload
+    public ClientNatural(String nome) {
+        super(nome);
+    }
+
     //Constructor Overload
     public ClientNatural(String sexo, String dataNascimento, String rg, String cpf, String cnh, Integer idPessoa, String dataCadastro, String nome, String telefoneFixo, String celular, String whatsapp, String email, String cep, String rua, String numeroPredioCond, String numeroResidencia, String bairro, String cidade, String Estado, String pais, String observacao) {
         super(idPessoa, dataCadastro, nome, telefoneFixo, celular, whatsapp, email, cep, rua, numeroPredioCond, numeroResidencia, bairro, cidade, Estado, pais, observacao);
-        this.sexo = sexo;       
+        this.sexo = sexo;
         this.dataNascimento = dataNascimento;
         this.rg = rg;
         this.cpf = cpf;
         this.cnh = cnh;
     }
-    
-     //Get and Set Methods
-    public String getSexo() {    
+
+    //Get and Set Methods
+    public String getSexo() {
         return sexo;
     }
 
@@ -63,8 +74,8 @@ public class ClientNatural extends Person {
     public String getCnh() {
         return cnh;
     }
-   
-    public void setCnh(String cnh) {    
+
+    public void setCnh(String cnh) {
         this.cnh = cnh;
     }
 
@@ -118,7 +129,7 @@ public class ClientNatural extends Person {
         sb.append(",\n Estado = ").append(getEstado());
         sb.append(",\n pais = ").append(getPais());
         sb.append(",\n observacao = ").append(getObservacao());
-        sb.append('}');     
+        sb.append('}');
 
         sb.append("ClientNaturalPerson{");
         sb.append("\nsexo = ").append(sexo);

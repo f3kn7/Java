@@ -2,12 +2,6 @@ package model.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
-import model.enums.car.Category;
-import model.enums.car.NumberDoors;
-import model.enums.car.NumberPassengers;
-import model.enums.car.TransmissionType;
-import model.enums.car.TrunkCapacity;
-import model.enums.car.TypeFuel;
 
 /**
  *
@@ -47,10 +41,18 @@ public class Car implements Serializable {
     }
 
     //Constructor overload
-    public Car(Integer idCar, String dataCadastroCarro, String marca, String modelo, String ano, String cor, String qntPassageiros, String qntPortas, String capPortaMalas,
-            String tracao, String motor, String potencia, String transmissao, String tipoCombustivel, String renavam, String codChassi, String placa, double km,
-            double valorAluguel, String observacoes, CarCategory carCategory) {
+    public Car(Integer idCar) {
+        this.idCar = idCar;
+    }
 
+    //Constructor overload
+    public Car(String modelo) {
+
+        this.modelo = modelo;
+    }
+
+    //Constructor overload
+    public Car(Integer idCar, String dataCadastroCarro, String marca, String modelo, String ano, String cor, String qntPassageiros, String qntPortas, String capPortaMalas, String tracao, String motor, String potencia, String transmissao, String tipoCombustivel, String renavam, String codChassi, String placa, double km, double valorAluguel, String observacoes, CarCategory carCategory) {
         this.idCar = idCar;
         this.dataCadastroCarro = dataCadastroCarro;
         this.marca = marca;
@@ -296,6 +298,11 @@ public class Car implements Serializable {
         sb.append('}');
 
         return sb.toString();
+    }
+    
+    public double getValorCarBd(){
+        
+        return this.valorAluguel;
     }
 
 }

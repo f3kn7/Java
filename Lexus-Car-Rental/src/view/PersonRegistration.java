@@ -561,7 +561,7 @@ public class PersonRegistration extends javax.swing.JFrame {
             cj.setEstado((String) jComboBox_uf_estado_federativo.getSelectedItem());
             cj.setPais(jText_pais.getText());
 
-            //clientLegalDao.insert(cj);
+            //clientLegalDao.insert(cj);  -------> toDo
         } else {
             JOptionPane.showMessageDialog(this, "Escolha o tipo de pessoa!", "Atencao", JOptionPane.WARNING_MESSAGE);
         }

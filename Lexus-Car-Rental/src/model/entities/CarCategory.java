@@ -1,20 +1,26 @@
-
 package model.entities;
 
 import java.util.Objects;
 
 /**
  *
- * @author Felipe Kellermann 
+ * @author Felipe Kellermann
  */
 public class CarCategory {
-    
+
     private Integer idCategoria;
     private String nome;
 
+    //Default Constructor
     public CarCategory() {
     }
 
+    //Overload Constructor
+    public CarCategory(Integer idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    //Overload Constructor
     public CarCategory(Integer idCategoria, String nome) {
         this.idCategoria = idCategoria;
         this.nome = nome;
@@ -71,8 +77,5 @@ public class CarCategory {
         sb.append('}');
         return sb.toString();
     }
-    
-    
-    
-    
+
 }
