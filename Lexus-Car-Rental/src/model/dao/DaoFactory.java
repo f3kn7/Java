@@ -1,9 +1,9 @@
 package model.dao;
 
 import db.DB;
-import model.dao.impl.CarCategoryJDBC;
+import model.dao.impl.CarCategoryDaoJDBC;
 import model.dao.impl.CarDaoJDBC;
-import model.dao.impl.ClientNaturalJDBC;
+import model.dao.impl.ClientNaturalDaoJDBC;
 import model.dao.impl.RentalDaoJDBC;
 
 
@@ -15,7 +15,7 @@ public class DaoFactory {
 
     public static ClientNaturalDao createClientNaturalDao() { //PARA NÃO EXPOR A IMPLEMENTAÇÃO, DEIXAR APENAS A INTERFACE (INJEÇÃO DE DEPENDENCIA)
 
-        return new ClientNaturalJDBC(DB.getConnection());
+        return new ClientNaturalDaoJDBC(DB.getConnection());
     }
 
     public static CarDao createCarDao() { //PARA NÃO EXPOR A IMPLEMENTAÇÃO, DEIXAR APENAS A INTERFACE (INJEÇÃO DE DEPENDENCIA)
@@ -25,7 +25,7 @@ public class DaoFactory {
 
     public static CarCategoryDao createCarCategoryDao() { //PARA NÃO EXPOR A IMPLEMENTAÇÃO, DEIXAR APENAS A INTERFACE (INJEÇÃO DE DEPENDENCIA)
 
-        return new CarCategoryJDBC(DB.getConnection());
+        return new CarCategoryDaoJDBC(DB.getConnection());
     }
     
     public static RentalDao createRentalDao() { //PARA NÃO EXPOR A IMPLEMENTAÇÃO, DEIXAR APENAS A INTERFACE (INJEÇÃO DE DEPENDENCIA)

@@ -40,17 +40,17 @@ public abstract class Person implements Serializable {
     public Person() {
     }
 
-    //Constructor Overload 
+    //Constructor Overload id
     public Person(Integer idPessoa) {
         this.idPessoa = idPessoa;
     }
 
-    //Contructor Overload
+    //Contructor Overload name
     public Person(String nome) {
         this.nome = nome;
     }
 
-    //Constructor Overload 
+    //Constructor Overload all
     public Person(Integer idPessoa, String dataCadastro, String nome, String telefoneFixo, String celular, String whatsapp, String email, String cep, String rua,
             String numeroPredioCond, String numeroResidencia, String bairro, String cidade, String Estado, String pais, String observacao) {
         this.idPessoa = idPessoa;

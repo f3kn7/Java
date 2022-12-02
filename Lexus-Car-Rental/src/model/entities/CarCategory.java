@@ -8,6 +8,7 @@ import java.util.Objects;
  */
 public class CarCategory {
 
+    //Attributes
     private Integer idCategoria;
     private String nome;
 
@@ -15,17 +16,18 @@ public class CarCategory {
     public CarCategory() {
     }
 
-    //Overload Constructor
+    //Overload Constructor id
     public CarCategory(Integer idCategoria) {
         this.idCategoria = idCategoria;
     }
 
-    //Overload Constructor
+    //Overload Constructor all
     public CarCategory(Integer idCategoria, String nome) {
         this.idCategoria = idCategoria;
         this.nome = nome;
     }
 
+    //Get and Set methods
     public String getNome() {
         return nome;
     }
@@ -42,6 +44,7 @@ public class CarCategory {
         this.idCategoria = idCategoria;
     }
 
+    //Hash and Equals | comparison by content (not by pointers)
     @Override
     public int hashCode() {
         int hash = 5;
@@ -67,7 +70,8 @@ public class CarCategory {
         }
         return Objects.equals(this.idCategoria, other.idCategoria);
     }
-
+    
+    //toString method
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

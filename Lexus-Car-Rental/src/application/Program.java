@@ -48,10 +48,10 @@ public class Program {
         departmentDao.insert(d);
 
         System.out.println(d);*/
-       // ClientNaturalDao clientNaturalDao = DaoFactory.createClientNaturalDao();
+        //ClientNaturalDao clientNaturalDao = DaoFactory.createClientNaturalDao();
         CarDao carDao = DaoFactory.createCarDao();
-        
-       /* RentalDao rentalDao = DaoFactory.createRentalDao();
+
+        /* RentalDao rentalDao = DaoFactory.createRentalDao();
         
         ClientNatural cli = new ClientNatural(38);
         
@@ -60,32 +60,34 @@ public class Program {
         Rental rent = new Rental(car, cli, 1, "12/11/2020 10:12", "20/11/2020 10:12", 400);
         
         rentalDao.insert(rent);*/
-
         //ClientNatural cn = new ClientNatural("Masculino", "20/10/2011", "123123", "123123", "123123312", 1, "20/10/2022", "Leonardo", "123213", "1232131321", "123123231", "fern@gmail.com", "1231213", "lima", "na", "1234", "liminha", "rosas", "rs", "br", "bli");
-       // CarCategoryDao carCategoryDao = DaoFactory.createCarCategoryDao();
-
+        // CarCategoryDao carCategoryDao = DaoFactory.createCarCategoryDao();
         //CarCategory cat = new CarCategory(3, "null");
-
         //Car car = new Car(1, "12/1/2012", "gm", "Tracker", "2010", "branco", "5", "4", "Medio", "Dianteira", "1.0", "100", "Automatico", "Gas/Alcool", "12322313", "123231313", "1232123dffg", 0, 120, "blablabla", cat);
-        
-        
         //clientNaturalDao.insert(cn);
         //clientNaturalDao.deleteById(34);
-        
-       /* List<ClientNatural> list = clientNaturalDao.findAll();
+        /*List<ClientNatural> list = clientNaturalDao.findAll();
         for(ClientNatural cli: list){
             System.out.println(cli);
         }*/
-                //clientNaturalDao.findById(38);
-                   Car car = new Car("onix");
-                   
-                
-                
-                carDao.getValueFromModelCar(car);
-                
-       // clientNaturalDao.findAll();
+        //clientNaturalDao.findById(38);
+        // Car car = new Car("onix");
+        //carDao.getValueFromModelCar(car);
+        
+       // ClientNatural cli = new ClientNatural();
+       // cli.setNome("Luis");
+        
+       // clientNaturalDao.getIdByName(cli);
+        
+       // System.out.println(cli.getIdPessoa());
         //carDao.insert(car);
-        System.out.println(car.getValorAluguel());
+        //System.out.println(car.getValorAluguel());
+        
+        Car car = new Car("Onix");
+        
+        carDao.getIdByModel(car);
+        
+        System.out.println(car.getIdCar());
 
     }
 

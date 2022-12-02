@@ -8,6 +8,7 @@ import java.util.Objects;
  */
 public class ClientNatural extends Person {
 
+    //Attributes
     private String sexo;
     private String dataNascimento;
     private String rg;
@@ -18,17 +19,17 @@ public class ClientNatural extends Person {
     public ClientNatural() {
     }
 
-    //Constructor Overload
+    //Constructor Overload id
     public ClientNatural(Integer idPessoa) {
         super(idPessoa);
     }
 
-    //Constructor Overload
+    //Constructor Overload nome
     public ClientNatural(String nome) {
         super(nome);
     }
 
-    //Constructor Overload
+    //Constructor Overload tudo
     public ClientNatural(String sexo, String dataNascimento, String rg, String cpf, String cnh, Integer idPessoa, String dataCadastro, String nome, String telefoneFixo, String celular, String whatsapp, String email, String cep, String rua, String numeroPredioCond, String numeroResidencia, String bairro, String cidade, String Estado, String pais, String observacao) {
         super(idPessoa, dataCadastro, nome, telefoneFixo, celular, whatsapp, email, cep, rua, numeroPredioCond, numeroResidencia, bairro, cidade, Estado, pais, observacao);
         this.sexo = sexo;

@@ -15,6 +15,8 @@ public interface ClientNaturalDao {
     void update(ClientNatural obj);
 
     void deleteById(Integer idPessoa);
+    
+    void getIdByName(ClientNatural obj);
 
     ClientNatural findById(Integer idPessoa);
 

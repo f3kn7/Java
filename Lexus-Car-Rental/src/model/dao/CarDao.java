@@ -15,7 +15,9 @@ public interface CarDao {
 
     void deleteById(Integer idCar);
     
-    void getValueFromModelCar(Car obj);
+    void getCarModelValue(Car obj);
+    
+    void getIdByModel(Car obj);
 
     Car findById(Integer idCar);
 

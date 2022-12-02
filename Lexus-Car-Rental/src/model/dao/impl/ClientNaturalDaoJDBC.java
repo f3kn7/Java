@@ -19,11 +19,11 @@ import model.entities.ClientNatural;
  *
  * @author Felipe Kellermann
  */
-public class ClientNaturalJDBC implements ClientNaturalDao {
+public class ClientNaturalDaoJDBC implements ClientNaturalDao {
 
     private final Connection conn;
 
-    public ClientNaturalJDBC(Connection conn) {
+    public ClientNaturalDaoJDBC(Connection conn) {
         this.conn = conn;
     }
 
@@ -107,7 +107,7 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
 
     @Override
     public void update(ClientNatural obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -144,7 +144,6 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
             rs = st.executeQuery();
             if (rs.next()) {
                 ClientNatural obj = instanteatePessoaClient(rs);
-               
 
             }
             return null;
@@ -165,7 +164,10 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
 
         try {
             st = conn.prepareStatement(
-                    "SELECT * FROM pessoa, c_fisico WHERE id_pessoa = id_fisico");
+                    "SELECT * "
+                    + "FROM pessoa a "
+                    + "INNER JOIN c_fisico b "
+                    + "ON a.id_pessoa = b.id_fisico ");
 
             rs = st.executeQuery();
 
@@ -214,6 +216,7 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
         obj.setEstado(rs.getString("estado"));
         obj.setPais(rs.getString("pais"));
         obj.setObservacao(rs.getString("observacao"));
+
         obj.setIdPessoa(rs.getInt("id_fisico"));
         obj.setSexo(rs.getString("sexo"));
         obj.setDataNascimento(rs.getString("data_nascimento"));
@@ -222,6 +225,39 @@ public class ClientNaturalJDBC implements ClientNaturalDao {
         obj.setCnh(rs.getString("cnh"));
 
         return obj;
+
+    }
+
+    @Override
+    public void getIdByName(ClientNatural obj) {
+
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "SELECT id_pessoa "
+                    + "FROM pessoa a "
+                    + "INNER JOIN c_fisico b "
+                    + "ON a.id_pessoa = b.id_fisico "
+                    + "WHERE a.nome = ?");
+
+            st.setString(1, obj.getNome());
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+
+                obj.setIdPessoa(rs.getInt("id_pessoa"));
+
+            }
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
 
     }
 

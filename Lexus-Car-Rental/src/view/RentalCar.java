@@ -10,8 +10,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.dao.CarDao;
 import model.dao.ClientNaturalDao;
@@ -70,8 +68,8 @@ public class RentalCar extends javax.swing.JFrame {
         jComboBox_modelo_carro_suv = new javax.swing.JComboBox<>();
         jLabel_cliente = new javax.swing.JLabel();
         jFormattedTextField_data_retirada = new javax.swing.JFormattedTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel_retirada = new javax.swing.JLabel();
+        jLabel_devolucao = new javax.swing.JLabel();
         jFormattedTextField_data_devolucao = new javax.swing.JFormattedTextField();
         jComboBox_Cliente = new javax.swing.JComboBox();
         jButton_consultar = new javax.swing.JButton();
@@ -231,7 +229,7 @@ public class RentalCar extends javax.swing.JFrame {
         getContentPane().add(jLabel_hatch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 200, 190));
 
         jLabel_valor.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel_valor.setText("Valor Total Aluguel R$:");
+        jLabel_valor.setText("Valor Total R$:");
         getContentPane().add(jLabel_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 540, 140, 20));
         getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 815, 20));
 
@@ -304,13 +302,13 @@ public class RentalCar extends javax.swing.JFrame {
         });
         getContentPane().add(jFormattedTextField_data_retirada, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 550, 100, 30));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel2.setText("Retirada:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 530, -1, 20));
+        jLabel_retirada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_retirada.setText("Retirada:");
+        getContentPane().add(jLabel_retirada, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 530, -1, 20));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Devolução:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, -1, 20));
+        jLabel_devolucao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_devolucao.setText("Devolução:");
+        getContentPane().add(jLabel_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, -1, 20));
 
         try {
             jFormattedTextField_data_devolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -334,6 +332,7 @@ public class RentalCar extends javax.swing.JFrame {
         });
         getContentPane().add(jFormattedTextField_data_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 620, 100, 30));
 
+        jComboBox_Cliente.setSelectedIndex(-1);
         jComboBox_Cliente.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jComboBox_ClienteAncestorAdded(evt);
@@ -403,39 +402,48 @@ public class RentalCar extends javax.swing.JFrame {
     private void jButton_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_salvarActionPerformed
 
         RentalDao rentalDao = DaoFactory.createRentalDao();
+        ClientNaturalDao clientNaturalDao = DaoFactory.createClientNaturalDao();
+        CarDao carDao = DaoFactory.createCarDao();
+
+        //criando objetos
+        Rental rent = new Rental();
+        ClientNatural cli = new ClientNatural();
+        Car car = new Car();
+
+        cli.setNome((String) jComboBox_Cliente.getSelectedItem()); //pegando o #nome do objeto cliente
+
+        clientNaturalDao.getIdByName(cli); //passando o #nome do cliente para funcao pegar o #id do cliente  
+
+        if (jCheckBox_hatch.isSelected()) {
+            car.setModelo((String) jComboBox_modelo_carro_hatch.getSelectedItem());
+        } else if (jCheckBox_sedam.isSelected()) {
+
+            car.setModelo((String) jComboBox_modelo_carro_sedam.getSelectedItem());
+        } else if (jCheckBox_suv.isSelected()) {
+
+            car.setModelo((String) jComboBox_modelo_carro_suv.getSelectedItem());
+        } else {
+            JOptionPane.showMessageDialog(this, "Escolha o carro!", "Atencao", JOptionPane.WARNING_MESSAGE);
+        }
+
+        carDao.getIdByModel(car);
+
+        SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
-            SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
-
-            Rental rent = new Rental();
-
-            Car car = new Car(4);
-
-            ClientNatural cli = new ClientNatural(38);
+            rent.setPessoaFisica(cli);
+            rent.setCarro(car);
 
             rent.setDataRetirada(form.parse(jFormattedTextField_data_retirada.getText()));
             rent.setDataDevolucao(form.parse(jFormattedTextField_data_devolucao.getText()));
+
             rent.setValorTotal(Double.parseDouble(jFormattedTextField_valor.getText()));
-            rent.setCarro(car);
-            rent.setPessoaFisica(cli);
 
-            if (jCheckBox_hatch.isSelected()) {
-
-                car.setModelo((String) jComboBox_modelo_carro_hatch.getSelectedItem());
-            } else if (jCheckBox_sedam.isSelected()) {
-
-                car.setModelo((String) jComboBox_modelo_carro_sedam.getSelectedItem());
-            } else if (jCheckBox_suv.isSelected()) {
-
-                car.setModelo((String) jComboBox_modelo_carro_suv.getSelectedItem());
-            } else {
-                JOptionPane.showMessageDialog(this, "Escolha o carro!", "Atencao", JOptionPane.WARNING_MESSAGE);
-            }
-            //Inserir aluguel no banco
+            //Inserir o aluguel no banco
             rentalDao.insert(rent);
 
-        } catch (ParseException ex) {
-            Logger.getLogger(RentalCar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException | NullPointerException ex) {
+            ex.getMessage();
         }
 
 
@@ -443,9 +451,10 @@ public class RentalCar extends javax.swing.JFrame {
 
     private void jButton_calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_calcularActionPerformed
 
-        //Calculando o tempo do aluguel em dias        
-        String data1 = jFormattedTextField_data_retirada.getText();
+        //Calculando o tempo do aluguel em dias          
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String data1 = jFormattedTextField_data_retirada.getText();
         LocalDate ld1 = LocalDate.parse(data1, formatter);
 
         String data2 = jFormattedTextField_data_devolucao.getText();
@@ -554,7 +563,6 @@ public class RentalCar extends javax.swing.JFrame {
 
     private void jFormattedTextField_data_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField_data_devolucaoKeyPressed
 
-
     }//GEN-LAST:event_jFormattedTextField_data_devolucaoKeyPressed
 
     private void jButton_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_consultarActionPerformed
@@ -575,7 +583,7 @@ public class RentalCar extends javax.swing.JFrame {
 
     private void jComboBox_ClienteAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBox_ClienteAncestorAdded
 
-        //Lotando o comboBox com clientes do banco de dados
+        //Lotando o comboBox com os clientes cadastrados no banco de dados
         ClientNaturalDao clientNaturalDao = DaoFactory.createClientNaturalDao();
 
         List<ClientNatural> lista = clientNaturalDao.findAll();
@@ -676,16 +684,16 @@ public class RentalCar extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField_data_devolucao;
     private javax.swing.JFormattedTextField jFormattedTextField_data_retirada;
     private javax.swing.JFormattedTextField jFormattedTextField_valor;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel_aluguel;
     private javax.swing.JLabel jLabel_categoria;
     private javax.swing.JLabel jLabel_categoria_escolhida;
     private javax.swing.JLabel jLabel_cliente;
     private javax.swing.JLabel jLabel_codigo;
     private javax.swing.JLabel jLabel_data;
+    private javax.swing.JLabel jLabel_devolucao;
     private javax.swing.JLabel jLabel_diarias;
     private javax.swing.JLabel jLabel_hatch;
+    private javax.swing.JLabel jLabel_retirada;
     private javax.swing.JLabel jLabel_sedam;
     private javax.swing.JLabel jLabel_suv;
     private javax.swing.JLabel jLabel_total_diarias;
@@ -739,7 +747,7 @@ public class RentalCar extends javax.swing.JFrame {
         Car car = new Car();
 
         car.setModelo((String) jComboBox_modelo_carro_hatch.getSelectedItem());
-        carDao.getValueFromModelCar(car);
+        carDao.getCarModelValue(car);
         jLabel_valor_diaria.setText(Double.toString(car.getValorAluguel()));
 
     }
@@ -751,7 +759,7 @@ public class RentalCar extends javax.swing.JFrame {
         Car car = new Car();
 
         car.setModelo((String) jComboBox_modelo_carro_sedam.getSelectedItem());
-        carDao.getValueFromModelCar(car);
+        carDao.getCarModelValue(car);
         jLabel_valor_diaria.setText(Double.toString(car.getValorAluguel()));
 
     }
@@ -763,7 +771,7 @@ public class RentalCar extends javax.swing.JFrame {
         Car car = new Car();
 
         car.setModelo((String) jComboBox_modelo_carro_suv.getSelectedItem());
-        carDao.getValueFromModelCar(car);
+        carDao.getCarModelValue(car);
         jLabel_valor_diaria.setText(Double.toString(car.getValorAluguel()));
 
     }

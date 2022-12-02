@@ -8,13 +8,14 @@ import java.util.Objects;
  */
 public class ClientLegal extends Person {
 
+    //Attributes
     private String cnpj;
 
     //Default Constructor
     public ClientLegal() {
     }
 
-    //Constructor Overload
+    //Constructor Overload all
     public ClientLegal(String cnpj, Integer idPessoa, String dataCadastro, String nome, String telefoneFixo, String celular, String whatsapp,
             String email, String cep, String rua, String numeroPredioCond, String numeroResidencia, String bairro, String cidade, String Estado, String pais, String observacao) {
 

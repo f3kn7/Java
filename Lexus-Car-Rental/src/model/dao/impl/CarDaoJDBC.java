@@ -106,7 +106,7 @@ public class CarDaoJDBC implements CarDao {
     }
 
     @Override
-    public void getValueFromModelCar(Car obj) {
+    public void getCarModelValue(Car obj) {
 
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -121,10 +121,38 @@ public class CarDaoJDBC implements CarDao {
 
             if (rs.next()) {
 
-              obj.setValorAluguel(rs.getDouble("valor_aluguel"));
+                obj.setValorAluguel(rs.getDouble("valor_aluguel"));
 
             }
-            
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+
+    }
+
+    @Override
+    public void getIdByModel(Car obj) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "SELECT id_carro FROM carro WHERE modelo = ? LIMIT 1");
+
+            st.setString(1, obj.getModelo());
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+
+                obj.setIdCar(rs.getInt("id_carro"));
+
+            }
+
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {

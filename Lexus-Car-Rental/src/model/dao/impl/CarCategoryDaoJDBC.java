@@ -15,11 +15,11 @@ import model.entities.CarCategory;
  *
  * @author Felipe Kellermann
  */
-public class CarCategoryJDBC implements CarCategoryDao {
+public class CarCategoryDaoJDBC implements CarCategoryDao {
     
      private final Connection conn;
 
-    public CarCategoryJDBC(Connection conn) {
+    public CarCategoryDaoJDBC(Connection conn) {
         this.conn = conn;
     }
 

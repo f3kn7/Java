@@ -9,6 +9,7 @@ import java.util.Objects;
  */
 public class Department {
     
+    //Attributes
     private Integer id;
     private String nome;    
 

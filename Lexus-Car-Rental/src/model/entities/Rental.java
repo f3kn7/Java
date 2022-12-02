@@ -12,6 +12,7 @@ import java.util.logging.Logger;
  */
 public class Rental {
 
+    //Attributes
     private Integer idAluguel;
     private Date dataRetirada;
     private Date dataDevolucao;
@@ -20,13 +21,16 @@ public class Rental {
     private Car carro;
     private ClientNatural pessoaFisica;
 
+    //Default constructor
     public Rental() {
     }
 
+    //Overload Constructor id
     public Rental(Integer idAluguel) {
         this.idAluguel = idAluguel;
     }
 
+    //Overload Constructor all
     public Rental(Car carro, ClientNatural pessoaFisica, Integer idAluguel, String dataRetirada, String dataDevolucao, double valorTotal) {
         try {
             this.carro = carro;
@@ -42,6 +46,7 @@ public class Rental {
 
     }
 
+    //get and set methods
     public Car getCarro() {
         return carro;
     }
