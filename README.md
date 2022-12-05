@@ -1,8 +1,4 @@
 # Java
-### Java programing
-![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
-
-
-*Exercises, academic works and personal projects for study* :sunglasses:
-
-     System.out.print("Hello Java Wolrd!");
+<div align="center">
+<img src="https://user-images.githubusercontent.com/70611621/197594223-8112f124-ac85-443d-9711-c6be9aef6b5a.png"/>
+</div>
