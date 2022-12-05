@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -10,7 +11,7 @@ public class ClientNatural extends Person {
 
     //Attributes
     private String sexo;
-    private String dataNascimento;
+    private Date dataNascimento;
     private String rg;
     private String cpf;
     private String cnh;
@@ -30,7 +31,7 @@ public class ClientNatural extends Person {
     }
 
     //Constructor Overload tudo
-    public ClientNatural(String sexo, String dataNascimento, String rg, String cpf, String cnh, Integer idPessoa, String dataCadastro, String nome, String telefoneFixo, String celular, String whatsapp, String email, String cep, String rua, String numeroPredioCond, String numeroResidencia, String bairro, String cidade, String Estado, String pais, String observacao) {
+    public ClientNatural(String sexo, Date dataNascimento, String rg, String cpf, String cnh, Integer idPessoa, String dataCadastro, String nome, String telefoneFixo, String celular, String whatsapp, String email, String cep, String rua, String numeroPredioCond, String numeroResidencia, String bairro, String cidade, String Estado, String pais, String observacao) {
         super(idPessoa, dataCadastro, nome, telefoneFixo, celular, whatsapp, email, cep, rua, numeroPredioCond, numeroResidencia, bairro, cidade, Estado, pais, observacao);
         this.sexo = sexo;
         this.dataNascimento = dataNascimento;
@@ -48,11 +49,11 @@ public class ClientNatural extends Person {
         this.sexo = sexo;
     }
 
-    public String getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

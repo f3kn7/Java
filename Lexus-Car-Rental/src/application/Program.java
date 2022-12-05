@@ -1,15 +1,10 @@
 package application;
 
 import java.util.List;
-import model.dao.CarCategoryDao;
 import model.dao.CarDao;
-import model.dao.ClientNaturalDao;
 import model.dao.DaoFactory;
-import model.dao.RentalDao;
 import model.entities.Car;
 import model.entities.CarCategory;
-import model.entities.ClientNatural;
-import model.entities.Rental;
 
 public class Program {
 
@@ -49,7 +44,7 @@ public class Program {
 
         System.out.println(d);*/
         //ClientNaturalDao clientNaturalDao = DaoFactory.createClientNaturalDao();
-        CarDao carDao = DaoFactory.createCarDao();
+        
 
         /* RentalDao rentalDao = DaoFactory.createRentalDao();
         
@@ -71,24 +66,25 @@ public class Program {
             System.out.println(cli);
         }*/
         //clientNaturalDao.findById(38);
-        // Car car = new Car("onix");
+        // Car car = new Car();
         //carDao.getValueFromModelCar(car);
-        
-       // ClientNatural cli = new ClientNatural();
-       // cli.setNome("Luis");
-        
-       // clientNaturalDao.getIdByName(cli);
-        
-       // System.out.println(cli.getIdPessoa());
+        // ClientNatural cli = new ClientNatural();
+        // cli.setNome("Luis");
+        // clientNaturalDao.getIdByName(cli);
+        // System.out.println(cli.getIdPessoa());
         //carDao.insert(car);
         //System.out.println(car.getValorAluguel());
+        CarDao carDao = DaoFactory.createCarDao();
         
-        Car car = new Car("Onix");
+        CarCategory cc = new CarCategory();
+        cc.setNome("HATCH");
         
-        carDao.getIdByModel(car);
+        List<Car> list = carDao.getModelsByCategory(cc);
         
-        System.out.println(car.getIdCar());
+        for (Car car : list) {
+            System.out.println(car.getModelo());
+
+        }
 
     }
-
 }

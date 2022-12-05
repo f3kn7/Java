@@ -73,7 +73,7 @@ public class ClientNaturalDaoJDBC implements ClientNaturalDao {
 
             st.setInt(1, obj.getIdPessoa());
             st.setString(2, obj.getSexo());
-            st.setString(3, obj.getDataNascimento());
+            st.setDate(3, new java.sql.Date(obj.getDataNascimento().getTime()));
             st.setString(4, obj.getRg());
             st.setString(5, obj.getCpf());
             st.setString(6, obj.getCnh());
@@ -219,7 +219,7 @@ public class ClientNaturalDaoJDBC implements ClientNaturalDao {
 
         obj.setIdPessoa(rs.getInt("id_fisico"));
         obj.setSexo(rs.getString("sexo"));
-        obj.setDataNascimento(rs.getString("data_nascimento"));
+        obj.setDataNascimento(rs.getDate("data_nascimento"));
         obj.setRg(rs.getString("rg"));
         obj.setCpf(rs.getString("cpf"));
         obj.setCnh(rs.getString("cnh"));

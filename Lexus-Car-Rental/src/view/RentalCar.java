@@ -7,8 +7,8 @@ package view;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.dao.CarDao;
@@ -16,6 +16,7 @@ import model.dao.ClientNaturalDao;
 import model.dao.DaoFactory;
 import model.dao.RentalDao;
 import model.entities.Car;
+import model.entities.CarCategory;
 import model.entities.ClientNatural;
 import model.entities.Rental;
 
@@ -50,10 +51,7 @@ public class RentalCar extends javax.swing.JFrame {
         jButton_excluir = new javax.swing.JButton();
         jButton_limpar = new javax.swing.JButton();
         jLabel_codigo = new javax.swing.JLabel();
-        jText_id_aluguel = new javax.swing.JTextField();
-        jLabel_data = new javax.swing.JLabel();
-        jText_data_aluguel = new javax.swing.JTextField();
-        jSeparator5 = new javax.swing.JSeparator();
+        jText_data = new javax.swing.JTextField();
         jCheckBox_hatch = new javax.swing.JCheckBox();
         jComboBox_modelo_carro_hatch = new javax.swing.JComboBox<>();
         jFormattedTextField_valor = new javax.swing.JFormattedTextField();
@@ -83,7 +81,8 @@ public class RentalCar extends javax.swing.JFrame {
         jLabel_diarias = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alugar Veículo - Lexus Autolocadora");
         setMinimumSize(new java.awt.Dimension(1040, 684));
         setName("background"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1040, 720));
@@ -91,14 +90,17 @@ public class RentalCar extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1040, 684));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel_aluguel.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel_aluguel.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel_aluguel.setText("A L U G A R    V E Í C U L O");
-        getContentPane().add(jLabel_aluguel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, -1, 30));
-        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 815, 14));
+        jLabel_aluguel.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel_aluguel.setForeground(new java.awt.Color(65, 65, 65));
+        jLabel_aluguel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Carro/carSELECT_44px.png"))); // NOI18N
+        jLabel_aluguel.setText("ALUGAR  VEÍCULO");
+        getContentPane().add(jLabel_aluguel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, -1, 60));
+
+        jSeparator2.setBackground(new java.awt.Color(102, 102, 102));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 815, 14));
 
         jButton_salvar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_salvar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_salvar.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_salvar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/save.png"))); // NOI18N
         jButton_salvar.setText("Salvar");
@@ -112,7 +114,7 @@ public class RentalCar extends javax.swing.JFrame {
         getContentPane().add(jButton_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 210, 130, -1));
 
         jButton_calcular.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_calcular.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_calcular.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_calcular.setForeground(new java.awt.Color(204, 204, 204));
         jButton_calcular.setText("Calcular");
         jButton_calcular.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -124,7 +126,7 @@ public class RentalCar extends javax.swing.JFrame {
         getContentPane().add(jButton_calcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 610, 140, 40));
 
         jButton_alterar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_alterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_alterar.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_alterar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/edit.png"))); // NOI18N
         jButton_alterar.setText("Alterar");
@@ -138,7 +140,7 @@ public class RentalCar extends javax.swing.JFrame {
         getContentPane().add(jButton_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 310, 130, -1));
 
         jButton_excluir.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_excluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_excluir.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_excluir.setForeground(new java.awt.Color(204, 204, 204));
         jButton_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/delete.png"))); // NOI18N
         jButton_excluir.setText("Excluir");
@@ -152,7 +154,7 @@ public class RentalCar extends javax.swing.JFrame {
         getContentPane().add(jButton_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 360, 130, -1));
 
         jButton_limpar.setBackground(new java.awt.Color(51, 51, 51));
-        jButton_limpar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_limpar.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jButton_limpar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_limpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/clear.png"))); // NOI18N
         jButton_limpar.setText("Limpar");
@@ -166,47 +168,56 @@ public class RentalCar extends javax.swing.JFrame {
         });
         getContentPane().add(jButton_limpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 430, 110, 40));
 
-        jLabel_codigo.setText("Código:");
-        getContentPane().add(jLabel_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, 23));
+        jLabel_codigo.setFont(new java.awt.Font("Microsoft YaHei", 0, 12)); // NOI18N
+        jLabel_codigo.setText("Data:");
+        getContentPane().add(jLabel_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 30));
 
-        jText_id_aluguel.setBackground(new java.awt.Color(102, 102, 102));
-        jText_id_aluguel.setForeground(new java.awt.Color(204, 204, 204));
-        jText_id_aluguel.setText("00001");
-        jText_id_aluguel.setEnabled(false);
-        jText_id_aluguel.setMinimumSize(new java.awt.Dimension(6, 22));
-        jText_id_aluguel.setRequestFocusEnabled(false);
-        jText_id_aluguel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jText_id_aluguelActionPerformed(evt);
+        jText_data.setBackground(new java.awt.Color(102, 102, 102));
+        jText_data.setFont(new java.awt.Font("Microsoft YaHei", 0, 12)); // NOI18N
+        jText_data.setForeground(new java.awt.Color(51, 51, 51));
+        jText_data.setText("02/12/2022");
+        jText_data.setCaretColor(new java.awt.Color(102, 102, 102));
+        jText_data.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        jText_data.setEnabled(false);
+        jText_data.setMinimumSize(new java.awt.Dimension(6, 22));
+        jText_data.setRequestFocusEnabled(false);
+        jText_data.setSelectedTextColor(new java.awt.Color(102, 102, 102));
+        jText_data.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jText_dataAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        getContentPane().add(jText_id_aluguel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 110, 23));
-
-        jLabel_data.setText("DATA:");
-        getContentPane().add(jLabel_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, -1, 23));
-
-        jText_data_aluguel.setText("21/02/2021");
-        jText_data_aluguel.setMinimumSize(new java.awt.Dimension(6, 22));
-        jText_data_aluguel.setRequestFocusEnabled(false);
-        jText_data_aluguel.addActionListener(new java.awt.event.ActionListener() {
+        jText_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jText_data_aluguelActionPerformed(evt);
+                jText_dataActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_data_aluguel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 90, 23));
-        getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 224, 815, 20));
+        getContentPane().add(jText_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 82, 30));
 
         jCheckBox_hatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox_hatchActionPerformed(evt);
             }
         });
-        getContentPane().add(jCheckBox_hatch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, -1, -1));
+        getContentPane().add(jCheckBox_hatch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, -1, -1));
 
-        jComboBox_modelo_carro_hatch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Onix", "Sandero" }));
+        jComboBox_modelo_carro_hatch.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_modelo_carro_hatch.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_modelo_carro_hatchItemStateChanged(evt);
+            }
+        });
+        jComboBox_modelo_carro_hatch.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jComboBox_modelo_carro_hatchAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jComboBox_modelo_carro_hatch.addActionListener(new java.awt.event.ActionListener() {
@@ -214,10 +225,10 @@ public class RentalCar extends javax.swing.JFrame {
                 jComboBox_modelo_carro_hatchActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox_modelo_carro_hatch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, 200, 30));
+        getContentPane().add(jComboBox_modelo_carro_hatch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 200, 32));
 
         jFormattedTextField_valor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        jFormattedTextField_valor.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jFormattedTextField_valor.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jFormattedTextField_valor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField_valorActionPerformed(evt);
@@ -226,9 +237,9 @@ public class RentalCar extends javax.swing.JFrame {
         getContentPane().add(jFormattedTextField_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 560, 140, 35));
 
         jLabel_hatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/hatch.jpg"))); // NOI18N
-        getContentPane().add(jLabel_hatch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 200, 190));
+        getContentPane().add(jLabel_hatch, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 200, 190));
 
-        jLabel_valor.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel_valor.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_valor.setText("Valor Total R$:");
         getContentPane().add(jLabel_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 540, 140, 20));
         getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 815, 20));
@@ -238,25 +249,34 @@ public class RentalCar extends javax.swing.JFrame {
                 jCheckBox_sedamActionPerformed(evt);
             }
         });
-        getContentPane().add(jCheckBox_sedam, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, -1, -1));
+        getContentPane().add(jCheckBox_sedam, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 420, -1, -1));
 
         jLabel_sedam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/sedam.jpg"))); // NOI18N
-        getContentPane().add(jLabel_sedam, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 200, 190));
+        getContentPane().add(jLabel_sedam, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 200, 190));
 
         jCheckBox_suv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox_suvActionPerformed(evt);
             }
         });
-        getContentPane().add(jCheckBox_suv, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 430, -1, -1));
+        getContentPane().add(jCheckBox_suv, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 420, -1, -1));
 
         jLabel_suv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/suv.jpg"))); // NOI18N
-        getContentPane().add(jLabel_suv, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, 200, 190));
+        getContentPane().add(jLabel_suv, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 250, 200, 190));
 
-        jComboBox_modelo_carro_sedam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Voyage", "Ka Sedam" }));
+        jComboBox_modelo_carro_sedam.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_modelo_carro_sedam.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_modelo_carro_sedamItemStateChanged(evt);
+            }
+        });
+        jComboBox_modelo_carro_sedam.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jComboBox_modelo_carro_sedamAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jComboBox_modelo_carro_sedam.addActionListener(new java.awt.event.ActionListener() {
@@ -264,12 +284,21 @@ public class RentalCar extends javax.swing.JFrame {
                 jComboBox_modelo_carro_sedamActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox_modelo_carro_sedam, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 460, 200, 30));
+        getContentPane().add(jComboBox_modelo_carro_sedam, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 450, 200, 32));
 
-        jComboBox_modelo_carro_suv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Duster", "Spin" }));
+        jComboBox_modelo_carro_suv.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_modelo_carro_suv.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_modelo_carro_suvItemStateChanged(evt);
+            }
+        });
+        jComboBox_modelo_carro_suv.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jComboBox_modelo_carro_suvAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jComboBox_modelo_carro_suv.addActionListener(new java.awt.event.ActionListener() {
@@ -277,9 +306,9 @@ public class RentalCar extends javax.swing.JFrame {
                 jComboBox_modelo_carro_suvActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox_modelo_carro_suv, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 460, 200, 30));
+        getContentPane().add(jComboBox_modelo_carro_suv, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 450, 200, 32));
 
-        jLabel_cliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_cliente.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_cliente.setText("Cliente:");
         getContentPane().add(jLabel_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 80, 20));
 
@@ -289,7 +318,7 @@ public class RentalCar extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         jFormattedTextField_data_retirada.setText("02/12/2020");
-        jFormattedTextField_data_retirada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jFormattedTextField_data_retirada.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jFormattedTextField_data_retirada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField_data_retiradaActionPerformed(evt);
@@ -300,13 +329,13 @@ public class RentalCar extends javax.swing.JFrame {
                 jFormattedTextField_data_retiradaKeyTyped(evt);
             }
         });
-        getContentPane().add(jFormattedTextField_data_retirada, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 550, 100, 30));
+        getContentPane().add(jFormattedTextField_data_retirada, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 550, 100, 32));
 
-        jLabel_retirada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_retirada.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_retirada.setText("Retirada:");
         getContentPane().add(jLabel_retirada, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 530, -1, 20));
 
-        jLabel_devolucao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_devolucao.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_devolucao.setText("Devolução:");
         getContentPane().add(jLabel_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, -1, 20));
 
@@ -316,7 +345,7 @@ public class RentalCar extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         jFormattedTextField_data_devolucao.setText("05122020");
-        jFormattedTextField_data_devolucao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jFormattedTextField_data_devolucao.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jFormattedTextField_data_devolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField_data_devolucaoActionPerformed(evt);
@@ -330,9 +359,9 @@ public class RentalCar extends javax.swing.JFrame {
                 jFormattedTextField_data_devolucaoKeyTyped(evt);
             }
         });
-        getContentPane().add(jFormattedTextField_data_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 620, 100, 30));
+        getContentPane().add(jFormattedTextField_data_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 620, 100, 32));
 
-        jComboBox_Cliente.setSelectedIndex(-1);
+        jComboBox_Cliente.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_Cliente.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jComboBox_ClienteAncestorAdded(evt);
@@ -342,10 +371,10 @@ public class RentalCar extends javax.swing.JFrame {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        getContentPane().add(jComboBox_Cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 300, 30));
+        getContentPane().add(jComboBox_Cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 300, 32));
 
         jButton_consultar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_consultar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_consultar.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jButton_consultar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/search.png"))); // NOI18N
         jButton_consultar.setText("Consultar");
@@ -358,32 +387,36 @@ public class RentalCar extends javax.swing.JFrame {
         });
         getContentPane().add(jButton_consultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 260, 130, -1));
 
+        jLabel_categoria_escolhida.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_categoria_escolhida.setToolTipText("");
         jLabel_categoria_escolhida.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel_categoria_escolhida, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, 130, 30));
 
-        jLabel_categoria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_categoria.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_categoria.setText("Categoria escolhida:");
         getContentPane().add(jLabel_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, -1, 20));
 
-        jLabel_veiculo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_veiculo.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_veiculo.setText("Veiculo escolhido:");
         getContentPane().add(jLabel_veiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 600, -1, 20));
 
+        jLabel_veiculo_escolhido.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_veiculo_escolhido.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel_veiculo_escolhido, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 620, 130, 30));
 
+        jLabel_valor_diaria.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_valor_diaria.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel_valor_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 620, 100, 30));
 
-        jLabel_vlr_diaria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_vlr_diaria.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_vlr_diaria.setText("Valor da diaria:");
         getContentPane().add(jLabel_vlr_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 600, -1, 20));
 
+        jLabel_total_diarias.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_total_diarias.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel_total_diarias, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, 100, 30));
 
-        jLabel_diarias.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_diarias.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_diarias.setText("Total diarias:");
         getContentPane().add(jLabel_diarias, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 530, -1, 20));
 
@@ -393,7 +426,9 @@ public class RentalCar extends javax.swing.JFrame {
         background.setAlignmentY(0.0F);
         background.setFocusCycleRoot(true);
         background.setPreferredSize(new java.awt.Dimension(1030, 690));
+        background.setVerifyInputWhenFocusTarget(false);
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -6, 1030, 690));
+        background.getAccessibleContext().setAccessibleDescription("");
 
         pack();
         setLocationRelativeTo(null);
@@ -460,21 +495,24 @@ public class RentalCar extends javax.swing.JFrame {
         String data2 = jFormattedTextField_data_devolucao.getText();
         LocalDate ld2 = LocalDate.parse(data2, formatter);
 
-        Period per = Period.between(ld1, ld2);
-        int dias = per.getDays();
+        long totalDias;
+        if (ld1.compareTo(ld2) < 0) {
+            totalDias = ChronoUnit.DAYS.between(ld1, ld2);
 
-        jLabel_total_diarias.setText(Integer.toString(dias));
+            jLabel_total_diarias.setText(Long.toString(totalDias));
 
-        //Calculando o valor R$ total do aluguel
-        double valorAluguel;
-        double result;
+            //Calculando o valor R$ total do aluguel
+            double valorAluguel;
+            double result;
 
-        valorAluguel = Double.parseDouble(jLabel_valor_diaria.getText());
+            valorAluguel = Double.parseDouble(jLabel_valor_diaria.getText());
 
-        result = valorAluguel * dias;
+            result = valorAluguel * totalDias;
 
-        jFormattedTextField_valor.setText(Double.toString(result));
-
+            jFormattedTextField_valor.setText(Double.toString(result));
+        } else {
+            JOptionPane.showMessageDialog(this, "A data de retirada não pode ser maior do que a de devolução!", "Atencao", JOptionPane.WARNING_MESSAGE);
+        }
 
     }//GEN-LAST:event_jButton_calcularActionPerformed
 
@@ -493,13 +531,9 @@ public class RentalCar extends javax.swing.JFrame {
         Limpar();
     }//GEN-LAST:event_jButton_limparActionPerformed
 
-    private void jText_id_aluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_id_aluguelActionPerformed
+    private void jText_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_dataActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jText_id_aluguelActionPerformed
-
-    private void jText_data_aluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_data_aluguelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jText_data_aluguelActionPerformed
+    }//GEN-LAST:event_jText_dataActionPerformed
 
     private void jCheckBox_hatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_hatchActionPerformed
         // TODO add your handling code here:
@@ -623,6 +657,65 @@ public class RentalCar extends javax.swing.JFrame {
         jFormattedTextField_valor.setText("");
     }//GEN-LAST:event_jFormattedTextField_data_devolucaoKeyTyped
 
+    private void jText_dataAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jText_dataAncestorAdded
+
+        String datahj = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        jText_data.setText(datahj);
+
+
+    }//GEN-LAST:event_jText_dataAncestorAdded
+
+    private void jComboBox_modelo_carro_hatchAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_hatchAncestorAdded
+        
+        //Lotando o comboBox com os modelos da categoria #HATCH cadastrados no banco de dados
+        CarDao carDao = DaoFactory.createCarDao();
+
+        jComboBox_modelo_carro_hatch.removeAll();
+
+        CarCategory cc = new CarCategory("HATCH");
+
+        List<Car> list = carDao.getModelsByCategory(cc);
+        for (Car car : list) {
+            jComboBox_modelo_carro_hatch.addItem(car.getModelo());
+
+        }
+
+
+    }//GEN-LAST:event_jComboBox_modelo_carro_hatchAncestorAdded
+
+    private void jComboBox_modelo_carro_sedamAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_sedamAncestorAdded
+
+        //Lotando o comboBox com os modelos da categoria #SEDAM cadastrados no banco de dados
+        CarDao carDao = DaoFactory.createCarDao();
+
+        jComboBox_modelo_carro_sedam.removeAll();
+
+        CarCategory cc = new CarCategory("SEDAM");
+
+        List<Car> list = carDao.getModelsByCategory(cc);
+        for (Car car : list) {
+            jComboBox_modelo_carro_sedam.addItem(car.getModelo());
+
+        }
+    }//GEN-LAST:event_jComboBox_modelo_carro_sedamAncestorAdded
+
+    private void jComboBox_modelo_carro_suvAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_suvAncestorAdded
+
+        //Lotando o comboBox com os modelos da categoria #SUV cadastrados no banco de dados
+        CarDao carDao = DaoFactory.createCarDao();
+
+        jComboBox_modelo_carro_suv.removeAll();
+
+        CarCategory cc = new CarCategory("SUV");
+
+        List<Car> list = carDao.getModelsByCategory(cc);
+        for (Car car : list) {
+            jComboBox_modelo_carro_suv.addItem(car.getModelo());
+
+        }
+    }//GEN-LAST:event_jComboBox_modelo_carro_suvAncestorAdded
+
     /**
      * @param args the command line arguments
      */
@@ -689,7 +782,6 @@ public class RentalCar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_categoria_escolhida;
     private javax.swing.JLabel jLabel_cliente;
     private javax.swing.JLabel jLabel_codigo;
-    private javax.swing.JLabel jLabel_data;
     private javax.swing.JLabel jLabel_devolucao;
     private javax.swing.JLabel jLabel_diarias;
     private javax.swing.JLabel jLabel_hatch;
@@ -704,9 +796,7 @@ public class RentalCar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_vlr_diaria;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTextField jText_data_aluguel;
-    private javax.swing.JTextField jText_id_aluguel;
+    private javax.swing.JTextField jText_data;
     // End of variables declaration//GEN-END:variables
 
     private void Limpar() {

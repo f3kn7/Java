@@ -7,10 +7,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import model.dao.CarDao;
 import model.entities.Car;
+import model.entities.CarCategory;
 
 /**
  *
@@ -33,7 +37,7 @@ public class CarDaoJDBC implements CarDao {
             st = conn.prepareStatement(
                     "INSERT INTO carro "
                     + "( marca, modelo, ano, cor, qnt_passageiros, qnt_portas, cap_mala, tracao, motor, potencia, transmissao, tipo_combustivel, chassi, "
-                    + " renavam, placa, km, valor_diaria, observacao, id_carro_categoria ) "
+                    + " renavam, placa, km, valor_aluguel, observacao, id_carro_categoria ) "
                     + "VALUES "
                     + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -158,6 +162,70 @@ public class CarDaoJDBC implements CarDao {
         } finally {
             DB.closeStatement(st);
             DB.closeResultSet(rs);
+        }
+
+    }
+
+    private CarCategory instantiateCategory(ResultSet rs) throws SQLException {
+        CarCategory cc = new CarCategory();
+
+        cc.setIdCategoria(rs.getInt("id_categoria"));
+        cc.setNome(rs.getString("nome_categoria"));
+
+        return cc;
+    }
+
+    private Car instantiateCar(ResultSet rs, CarCategory cc) throws SQLException {
+        Car car = new Car();
+        car.setIdCar(rs.getInt("id_carro"));
+        car.setModelo(rs.getString("modelo"));
+        car.setCarCategory(cc);
+        return car;
+    }
+
+    @Override
+    public List<Car> getModelsByCategory(CarCategory carCategory) {
+
+        PreparedStatement st = null;
+
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * "
+                    + "FROM carro a "
+                    + "left JOIN categoria b "
+                    + "ON a.id_carro_categoria = b.id_categoria "
+                    + "WHERE b.nome_categoria = ?"
+                    + "GROUP BY modelo");
+
+            st.setString(1, carCategory.getNome());
+
+            rs = st.executeQuery();
+
+            List<Car> list = new ArrayList<>();
+            Map<String, CarCategory> map = new HashMap<>();
+
+            while (rs.next()) {
+
+                CarCategory cc = map.get(rs.getString("nome_categoria"));
+
+                if (cc == null) {
+
+                    cc = instantiateCategory(rs);
+                    map.put(rs.getString("nome_categoria"), cc);
+
+                }
+                Car car = instantiateCar(rs, cc);
+                list.add(car);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+
         }
 
     }

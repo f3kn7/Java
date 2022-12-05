@@ -21,6 +21,11 @@ public class CarCategory {
         this.idCategoria = idCategoria;
     }
 
+    //Overload Constructor name
+    public CarCategory(String nome) {
+        this.nome = nome;
+    }
+
     //Overload Constructor all
     public CarCategory(Integer idCategoria, String nome) {
         this.idCategoria = idCategoria;
@@ -70,7 +75,7 @@ public class CarCategory {
         }
         return Objects.equals(this.idCategoria, other.idCategoria);
     }
-    
+
     //toString method
     @Override
     public String toString() {

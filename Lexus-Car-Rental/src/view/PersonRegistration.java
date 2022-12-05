@@ -4,7 +4,13 @@
  */
 package view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.dao.ClientNaturalDao;
 import model.dao.DaoFactory;
@@ -58,8 +64,6 @@ public class PersonRegistration extends javax.swing.JFrame {
         jText_rg = new javax.swing.JTextField();
         jLabel_cpf = new javax.swing.JLabel();
         jFormattedTextField_cpf = new javax.swing.JFormattedTextField();
-        jLabel_cnpj = new javax.swing.JLabel();
-        jFormattedTextField_cnpj = new javax.swing.JFormattedTextField();
         jLabel_cnh = new javax.swing.JLabel();
         jText_cnh = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -67,7 +71,6 @@ public class PersonRegistration extends javax.swing.JFrame {
         jFormattedTextField_tel_residencial = new javax.swing.JFormattedTextField();
         jLabel_celular = new javax.swing.JLabel();
         jFormattedTextField_celular = new javax.swing.JFormattedTextField();
-        jFormattedTextField_whatsapp = new javax.swing.JFormattedTextField();
         jLabel_whatsapp = new javax.swing.JLabel();
         jText_email = new javax.swing.JTextField();
         jLabel_email = new javax.swing.JLabel();
@@ -90,24 +93,29 @@ public class PersonRegistration extends javax.swing.JFrame {
         jLabel_obs = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea_observacoes = new javax.swing.JTextArea();
+        jFormattedTextField_cnpj = new javax.swing.JFormattedTextField();
+        jFormattedTextField_whatsapp = new javax.swing.JFormattedTextField();
+        jLabel_cnpj = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro de Cliente - Lexus Autolocadora");
         setMaximumSize(new java.awt.Dimension(0, 0));
         setName("background"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1040, 684));
+        setPreferredSize(new java.awt.Dimension(1040, 720));
         setResizable(false);
         setSize(new java.awt.Dimension(1026, 684));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel_Cadastro_de_pessoas.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel_Cadastro_de_pessoas.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel_Cadastro_de_pessoas.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel_Cadastro_de_pessoas.setText("C A D A S T R O    D E    C L I E N T E S");
-        getContentPane().add(jLabel_Cadastro_de_pessoas, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, -1, 30));
+        jLabel_Cadastro_de_pessoas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Pessoa/seguidor_38px.png"))); // NOI18N
+        jLabel_Cadastro_de_pessoas.setText("CADASTRO  DE  CLIENTE");
+        getContentPane().add(jLabel_Cadastro_de_pessoas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, 50));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 815, 14));
 
         jButton_salvar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_salvar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_salvar.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_salvar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/save.png"))); // NOI18N
         jButton_salvar.setText("Salvar");
@@ -121,7 +129,7 @@ public class PersonRegistration extends javax.swing.JFrame {
         getContentPane().add(jButton_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 210, 130, -1));
 
         jButton_consultar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_consultar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_consultar.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jButton_consultar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/search.png"))); // NOI18N
         jButton_consultar.setText("Consultar");
@@ -135,7 +143,7 @@ public class PersonRegistration extends javax.swing.JFrame {
         getContentPane().add(jButton_consultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 260, 130, -1));
 
         jButton_alterar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_alterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_alterar.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_alterar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/edit.png"))); // NOI18N
         jButton_alterar.setText("Alterar");
@@ -149,7 +157,7 @@ public class PersonRegistration extends javax.swing.JFrame {
         getContentPane().add(jButton_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 310, 130, -1));
 
         jButton_excluir.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_excluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_excluir.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_excluir.setForeground(new java.awt.Color(204, 204, 204));
         jButton_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/delete.png"))); // NOI18N
         jButton_excluir.setText("Excluir");
@@ -163,7 +171,7 @@ public class PersonRegistration extends javax.swing.JFrame {
         getContentPane().add(jButton_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 360, 130, -1));
 
         jButton_limpar.setBackground(new java.awt.Color(51, 51, 51));
-        jButton_limpar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_limpar.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jButton_limpar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_limpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/clear.png"))); // NOI18N
         jButton_limpar.setText("Limpar");
@@ -177,13 +185,15 @@ public class PersonRegistration extends javax.swing.JFrame {
         });
         getContentPane().add(jButton_limpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 430, 110, 40));
 
+        jLabel_codigo.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_codigo.setText("Código:");
-        getContentPane().add(jLabel_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 20));
+        getContentPane().add(jLabel_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 26));
 
         jText_codigo.setBackground(new java.awt.Color(102, 102, 102));
+        jText_codigo.setFont(new java.awt.Font("Microsoft YaHei", 0, 12)); // NOI18N
         jText_codigo.setForeground(new java.awt.Color(204, 204, 204));
         jText_codigo.setText("00001");
-        jText_codigo.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        jText_codigo.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         jText_codigo.setEnabled(false);
         jText_codigo.setMinimumSize(new java.awt.Dimension(6, 22));
         jText_codigo.addActionListener(new java.awt.event.ActionListener() {
@@ -191,29 +201,44 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_codigoActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 111, 22));
+        getContentPane().add(jText_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 111, 26));
 
-        jLabel_data.setText("DATA:");
-        getContentPane().add(jLabel_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, -1, 20));
+        jLabel_data.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        jLabel_data.setText("Data:");
+        getContentPane().add(jLabel_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, -1, 26));
 
         try {
             jFormattedTextField_data.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField_data.setText("01122020");
+        jFormattedTextField_data.setText("");
         jFormattedTextField_data.setToolTipText("");
+        jFormattedTextField_data.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        jFormattedTextField_data.setEnabled(false);
+        jFormattedTextField_data.setFocusable(false);
+        jFormattedTextField_data.setFont(new java.awt.Font("Microsoft YaHei", 0, 12)); // NOI18N
+        jFormattedTextField_data.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jFormattedTextField_dataAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jFormattedTextField_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField_dataActionPerformed(evt);
             }
         });
-        getContentPane().add(jFormattedTextField_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 90, 22));
+        getContentPane().add(jFormattedTextField_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 90, 26));
 
+        jLabel_pessoa.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_pessoa.setText("Pessoa:");
         getContentPane().add(jLabel_pessoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, 50, 22));
 
-        jCheckBox_pessoa_fisica.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jCheckBox_pessoa_fisica.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jCheckBox_pessoa_fisica.setText("Fisica");
         jCheckBox_pessoa_fisica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +247,7 @@ public class PersonRegistration extends javax.swing.JFrame {
         });
         getContentPane().add(jCheckBox_pessoa_fisica, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, -1, -1));
 
-        jCheckBox_pessoa_juridica.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jCheckBox_pessoa_juridica.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jCheckBox_pessoa_juridica.setText("Juridica");
         jCheckBox_pessoa_juridica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,10 +256,11 @@ public class PersonRegistration extends javax.swing.JFrame {
         });
         getContentPane().add(jCheckBox_pessoa_juridica, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 200, -1, 20));
 
+        jLabel_sexo.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_sexo.setText("Sexo:");
         getContentPane().add(jLabel_sexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, -1, 22));
 
-        jCheckBox_masculino.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jCheckBox_masculino.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jCheckBox_masculino.setText("Masc.");
         jCheckBox_masculino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,7 +269,7 @@ public class PersonRegistration extends javax.swing.JFrame {
         });
         getContentPane().add(jCheckBox_masculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 200, -1, 22));
 
-        jCheckBox_feminino.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jCheckBox_feminino.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jCheckBox_feminino.setText("Fem.");
         jCheckBox_feminino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,9 +278,11 @@ public class PersonRegistration extends javax.swing.JFrame {
         });
         getContentPane().add(jCheckBox_feminino, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, -1, 22));
 
+        jLabel_nome.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_nome.setText("Nome:");
-        getContentPane().add(jLabel_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, 25));
+        getContentPane().add(jLabel_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, 30));
 
+        jText_nome.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_nome.setText("João Silva da Silva da Silva da Silva");
         jText_nome.setMinimumSize(new java.awt.Dimension(6, 25));
         jText_nome.setPreferredSize(new java.awt.Dimension(6, 26));
@@ -263,21 +291,25 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_nomeActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 563, 25));
+        getContentPane().add(jText_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 550, 30));
 
+        jLabel_data_de_nasc.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_data_de_nasc.setText("Data de Nasc.:");
-        getContentPane().add(jLabel_data_de_nasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 240, -1, 25));
+        getContentPane().add(jLabel_data_de_nasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 250, -1, 30));
 
         try {
             jFormattedTextField_data_nasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(jFormattedTextField_data_nasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 240, 90, 25));
+        jFormattedTextField_data_nasc.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        getContentPane().add(jFormattedTextField_data_nasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 250, 100, 30));
 
+        jLabel_rg.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_rg.setText("RG:");
-        getContentPane().add(jLabel_rg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 30, 25));
+        getContentPane().add(jLabel_rg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 30, 30));
 
+        jText_rg.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_rg.setText("5009300100");
         jText_rg.setMinimumSize(new java.awt.Dimension(6, 22));
         jText_rg.addActionListener(new java.awt.event.ActionListener() {
@@ -285,47 +317,34 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_rgActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_rg, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 113, 25));
+        getContentPane().add(jText_rg, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 110, 30));
 
+        jLabel_cpf.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_cpf.setText("CPF:");
         jLabel_cpf.setRequestFocusEnabled(false);
         jLabel_cpf.setVerifyInputWhenFocusTarget(false);
-        getContentPane().add(jLabel_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 30, 25));
+        getContentPane().add(jLabel_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 30, 30));
 
         try {
             jFormattedTextField_cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jFormattedTextField_cpf.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jFormattedTextField_cpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField_cpfActionPerformed(evt);
             }
         });
-        getContentPane().add(jFormattedTextField_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 130, 25));
+        getContentPane().add(jFormattedTextField_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 140, 30));
 
-        jLabel_cnpj.setText("CNPJ:");
-        jLabel_cnpj.setRequestFocusEnabled(false);
-        jLabel_cnpj.setVerifyInputWhenFocusTarget(false);
-        getContentPane().add(jLabel_cnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, -1, 25));
-
-        try {
-            jFormattedTextField_cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextField_cnpj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField_cnpjActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jFormattedTextField_cnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, 140, 25));
-
+        jLabel_cnh.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_cnh.setText("CNH:");
         jLabel_cnh.setRequestFocusEnabled(false);
         jLabel_cnh.setVerifyInputWhenFocusTarget(false);
-        getContentPane().add(jLabel_cnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, -1, 25));
+        getContentPane().add(jLabel_cnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 300, -1, 30));
 
+        jText_cnh.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_cnh.setText("01005002070");
         jText_cnh.setMinimumSize(new java.awt.Dimension(6, 22));
         jText_cnh.addActionListener(new java.awt.event.ActionListener() {
@@ -333,11 +352,12 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_cnhActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_cnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 280, 113, 25));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 815, 14));
+        getContentPane().add(jText_cnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 300, 130, 30));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 815, 14));
 
+        jLabel_tel_residencial.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_tel_residencial.setText("Telefone Fixo:");
-        getContentPane().add(jLabel_tel_residencial, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, 22));
+        getContentPane().add(jLabel_tel_residencial, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, 30));
 
         try {
             jFormattedTextField_tel_residencial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
@@ -346,10 +366,12 @@ public class PersonRegistration extends javax.swing.JFrame {
         }
         jFormattedTextField_tel_residencial.setText("51");
         jFormattedTextField_tel_residencial.setToolTipText("");
-        getContentPane().add(jFormattedTextField_tel_residencial, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 120, 25));
+        jFormattedTextField_tel_residencial.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        getContentPane().add(jFormattedTextField_tel_residencial, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, 130, 30));
 
+        jLabel_celular.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_celular.setText("Celular:");
-        getContentPane().add(jLabel_celular, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, -1, 25));
+        getContentPane().add(jLabel_celular, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, -1, 30));
 
         try {
             jFormattedTextField_celular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
@@ -357,19 +379,14 @@ public class PersonRegistration extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         jFormattedTextField_celular.setText("51");
-        getContentPane().add(jFormattedTextField_celular, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, 120, 25));
+        jFormattedTextField_celular.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        getContentPane().add(jFormattedTextField_celular, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 130, 30));
 
-        try {
-            jFormattedTextField_whatsapp.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextField_whatsapp.setText("51");
-        getContentPane().add(jFormattedTextField_whatsapp, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 340, 120, 25));
-
+        jLabel_whatsapp.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_whatsapp.setText("WhatsApp:");
-        getContentPane().add(jLabel_whatsapp, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, -1, 22));
+        getContentPane().add(jLabel_whatsapp, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 370, -1, 30));
 
+        jText_email.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_email.setText("fulanodasilva@hotmail.com");
         jText_email.setMinimumSize(new java.awt.Dimension(6, 25));
         jText_email.setPreferredSize(new java.awt.Dimension(6, 26));
@@ -378,24 +395,29 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_emailActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 440, 25));
+        getContentPane().add(jText_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 550, 30));
 
+        jLabel_email.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_email.setText("E-mail:");
-        getContentPane().add(jLabel_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, -1, 22));
+        getContentPane().add(jLabel_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, -1, 30));
 
+        jLabel_cep.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_cep.setText("CEP:");
-        getContentPane().add(jLabel_cep, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, -1, 22));
+        getContentPane().add(jLabel_cep, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, -1, 30));
 
         try {
             jFormattedTextField_cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(jFormattedTextField_cep, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 120, 25));
+        jFormattedTextField_cep.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        getContentPane().add(jFormattedTextField_cep, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 470, 120, 30));
 
-        jLabel_n_predio_cond.setText("Nº Prédio / Cond:");
-        getContentPane().add(jLabel_n_predio_cond, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, -1, 22));
+        jLabel_n_predio_cond.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        jLabel_n_predio_cond.setText("Nº Pred / Cond:");
+        getContentPane().add(jLabel_n_predio_cond, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 520, -1, 30));
 
+        jText_numero_predio_cond.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_numero_predio_cond.setText("n/a");
         jText_numero_predio_cond.setMinimumSize(new java.awt.Dimension(6, 25));
         jText_numero_predio_cond.setPreferredSize(new java.awt.Dimension(6, 26));
@@ -404,8 +426,9 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_numero_predio_condActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_numero_predio_cond, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, 75, 25));
+        getContentPane().add(jText_numero_predio_cond, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 520, 75, 30));
 
+        jComboBox_uf_estado_federativo.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_uf_estado_federativo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
         jComboBox_uf_estado_federativo.setSelectedIndex(20);
         jComboBox_uf_estado_federativo.addActionListener(new java.awt.event.ActionListener() {
@@ -413,14 +436,18 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jComboBox_uf_estado_federativoActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox_uf_estado_federativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 540, 50, 25));
+        getContentPane().add(jComboBox_uf_estado_federativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 570, 60, 30));
+        jComboBox_uf_estado_federativo.getAccessibleContext().setAccessibleName("");
 
+        jLabel_estado.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_estado.setText("UF:");
-        getContentPane().add(jLabel_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, -1, 25));
+        getContentPane().add(jLabel_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, -1, 30));
 
+        jLabel_pais.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_pais.setText("País:");
-        getContentPane().add(jLabel_pais, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 540, -1, 22));
+        getContentPane().add(jLabel_pais, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 570, -1, 30));
 
+        jText_pais.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_pais.setText("Brasil");
         jText_pais.setMinimumSize(new java.awt.Dimension(6, 25));
         jText_pais.setPreferredSize(new java.awt.Dimension(6, 26));
@@ -429,8 +456,9 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_paisActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_pais, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, 120, 25));
+        getContentPane().add(jText_pais, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 570, 120, 30));
 
+        jText_bairro.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_bairro.setText("João Leal Leal");
         jText_bairro.setMinimumSize(new java.awt.Dimension(6, 25));
         jText_bairro.setPreferredSize(new java.awt.Dimension(6, 26));
@@ -439,14 +467,17 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_bairroActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_bairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 490, 290, 25));
+        getContentPane().add(jText_bairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 520, 250, 30));
 
+        jLabel_bairro.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_bairro.setText("Bairro:");
-        getContentPane().add(jLabel_bairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, -1, 25));
+        getContentPane().add(jLabel_bairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 520, -1, 30));
 
+        jLabel_rua.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_rua.setText("Rua:");
-        getContentPane().add(jLabel_rua, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 440, -1, 22));
+        getContentPane().add(jLabel_rua, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, -1, 30));
 
+        jText_rua.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_rua.setText("João Carlos da Silva Silva");
         jText_rua.setMinimumSize(new java.awt.Dimension(6, 25));
         jText_rua.setPreferredSize(new java.awt.Dimension(6, 26));
@@ -455,8 +486,9 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_ruaActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_rua, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, 431, 25));
+        getContentPane().add(jText_rua, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 470, 431, 30));
 
+        jText_numero_residencial.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_numero_residencial.setText("000000");
         jText_numero_residencial.setMinimumSize(new java.awt.Dimension(6, 25));
         jText_numero_residencial.setPreferredSize(new java.awt.Dimension(6, 26));
@@ -465,14 +497,17 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_numero_residencialActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_numero_residencial, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 440, 97, 25));
+        getContentPane().add(jText_numero_residencial, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 470, 100, 30));
 
+        jLabel_n.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_n.setText("Nº:");
-        getContentPane().add(jLabel_n, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 440, -1, 22));
+        getContentPane().add(jLabel_n, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, -1, 30));
 
+        jLabel_cidade.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_cidade.setText("Cidade:");
-        getContentPane().add(jLabel_cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 490, -1, 22));
+        getContentPane().add(jLabel_cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 520, -1, 30));
 
+        jText_cidade.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jText_cidade.setText("João Leal Leal");
         jText_cidade.setMinimumSize(new java.awt.Dimension(6, 25));
         jText_cidade.setPreferredSize(new java.awt.Dimension(6, 26));
@@ -481,17 +516,42 @@ public class PersonRegistration extends javax.swing.JFrame {
                 jText_cidadeActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 490, 220, 25));
+        getContentPane().add(jText_cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 520, 240, 30));
 
+        jLabel_obs.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_obs.setText("Obs:");
-        getContentPane().add(jLabel_obs, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, -1, 22));
+        getContentPane().add(jLabel_obs, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 570, -1, 30));
 
         jTextArea_observacoes.setColumns(20);
+        jTextArea_observacoes.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextArea_observacoes.setRows(5);
         jTextArea_observacoes.setText("the gray fox jumped over the lazy dog");
         jScrollPane1.setViewportView(jTextArea_observacoes);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 540, 520, 70));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 570, 470, 70));
+
+        try {
+            jFormattedTextField_cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField_cnpj.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        getContentPane().add(jFormattedTextField_cnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 300, 160, 30));
+
+        try {
+            jFormattedTextField_whatsapp.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField_whatsapp.setText("51");
+        jFormattedTextField_whatsapp.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        getContentPane().add(jFormattedTextField_whatsapp, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, 130, 30));
+
+        jLabel_cnpj.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        jLabel_cnpj.setText("CNPJ:");
+        jLabel_cnpj.setRequestFocusEnabled(false);
+        jLabel_cnpj.setVerifyInputWhenFocusTarget(false);
+        getContentPane().add(jLabel_cnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, -1, 30));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Background.jpg"))); // NOI18N
         background.setText("jLabel1");
@@ -514,6 +574,8 @@ public class PersonRegistration extends javax.swing.JFrame {
         ClientLegal cj = new ClientLegal();
 
         cf.setDataCadastro(new Date());
+        
+        SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
 
         if (jCheckBox_pessoa_fisica.isSelected()) {
 
@@ -526,7 +588,11 @@ public class PersonRegistration extends javax.swing.JFrame {
 
             }
             cf.setNome(jText_nome.getText());
-            cf.setDataNascimento(jFormattedTextField_data_nasc.getText());
+            try {
+                cf.setDataNascimento(form.parse(jFormattedTextField_data_nasc.getText()));
+            } catch (ParseException ex) {
+                Logger.getLogger(PersonRegistration.class.getName()).log(Level.SEVERE, null, ex);
+            }
             cf.setRg(jText_rg.getText());
             cf.setCpf(jFormattedTextField_cpf.getText());
             cf.setCnh(jText_cnh.getText());
@@ -650,10 +716,6 @@ public class PersonRegistration extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jText_cidadeActionPerformed
 
-    private void jFormattedTextField_cnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField_cnpjActionPerformed
-
-    }//GEN-LAST:event_jFormattedTextField_cnpjActionPerformed
-
     private void jCheckBox_pessoa_fisicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_pessoa_fisicaActionPerformed
         jCheckBox_pessoa_juridica.setSelected(false);
     }//GEN-LAST:event_jCheckBox_pessoa_fisicaActionPerformed
@@ -665,6 +727,12 @@ public class PersonRegistration extends javax.swing.JFrame {
     private void jFormattedTextField_cpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField_cpfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField_cpfActionPerformed
+
+    private void jFormattedTextField_dataAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jFormattedTextField_dataAncestorAdded
+       String datahj = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        jFormattedTextField_data.setText(datahj);
+    }//GEN-LAST:event_jFormattedTextField_dataAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -765,8 +833,7 @@ public class PersonRegistration extends javax.swing.JFrame {
 
     private void Limpar() {
 
-        //Metodo Limpar: limpa todos os campos preenchidos / reseta alguns campos para o dado mais usado! 
-        jFormattedTextField_data.setText("");
+        //Metodo Limpar: limpa todos os campos preenchidos / reseta alguns campos para o dado mais usado!         
         jCheckBox_pessoa_fisica.setSelected(false);
         jCheckBox_pessoa_juridica.setSelected(false);
         jCheckBox_masculino.setSelected(false);

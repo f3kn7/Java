@@ -2,6 +2,7 @@ package model.dao;
 
 import java.util.List;
 import model.entities.Car;
+import model.entities.CarCategory;
 
 /**
  *
@@ -14,10 +15,12 @@ public interface CarDao {
     void update(Car obj);
 
     void deleteById(Integer idCar);
-    
+
     void getCarModelValue(Car obj);
-    
+
     void getIdByModel(Car obj);
+
+    List<Car> getModelsByCategory(CarCategory carCategory);
 
     Car findById(Integer idCar);
 

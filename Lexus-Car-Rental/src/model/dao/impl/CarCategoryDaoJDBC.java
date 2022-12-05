@@ -29,7 +29,7 @@ public class CarCategoryDaoJDBC implements CarCategoryDao {
         try {
             st = conn.prepareStatement(
                     "INSERT INTO categoria "
-                    + "(nome) "
+                    + "(nome_categoria) "
                     + "VALUES "
                     + "(?)",
                     Statement.RETURN_GENERATED_KEYS);

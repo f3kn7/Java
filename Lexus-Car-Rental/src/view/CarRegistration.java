@@ -4,6 +4,8 @@
  */
 package view;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import model.dao.CarDao;
@@ -89,20 +91,23 @@ public class CarRegistration extends javax.swing.JFrame {
         jComboBox_categoria = new javax.swing.JComboBox<>();
         background = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro de Veículo - Lexus Autolocadora");
         setName("background"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1040, 720));
         setResizable(false);
         setSize(new java.awt.Dimension(1026, 684));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel_Cadastro_de_pessoas.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel_Cadastro_de_pessoas.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel_Cadastro_de_pessoas.setText("C A D A S T R O    D E    V E Í C U L O S");
-        getContentPane().add(jLabel_Cadastro_de_pessoas, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, -1, 30));
+        jLabel_Cadastro_de_pessoas.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel_Cadastro_de_pessoas.setForeground(new java.awt.Color(65, 65, 65));
+        jLabel_Cadastro_de_pessoas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Carro/carADD_44px.png"))); // NOI18N
+        jLabel_Cadastro_de_pessoas.setText("CADASTRO  DE  VEÍCULO");
+        getContentPane().add(jLabel_Cadastro_de_pessoas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, -1, 50));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 815, 14));
 
         jButton_salvar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_salvar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_salvar.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_salvar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/save.png"))); // NOI18N
         jButton_salvar.setText("Salvar");
@@ -116,7 +121,7 @@ public class CarRegistration extends javax.swing.JFrame {
         getContentPane().add(jButton_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 210, 130, -1));
 
         jButton_consultar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_consultar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_consultar.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jButton_consultar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/search.png"))); // NOI18N
         jButton_consultar.setText("Consultar");
@@ -130,7 +135,7 @@ public class CarRegistration extends javax.swing.JFrame {
         getContentPane().add(jButton_consultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 260, 130, -1));
 
         jButton_alterar.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_alterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_alterar.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_alterar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/edit.png"))); // NOI18N
         jButton_alterar.setText("Alterar");
@@ -144,7 +149,7 @@ public class CarRegistration extends javax.swing.JFrame {
         getContentPane().add(jButton_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 310, 130, -1));
 
         jButton_excluir.setBackground(new java.awt.Color(0, 0, 0));
-        jButton_excluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_excluir.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         jButton_excluir.setForeground(new java.awt.Color(204, 204, 204));
         jButton_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/delete.png"))); // NOI18N
         jButton_excluir.setText("Excluir");
@@ -158,7 +163,7 @@ public class CarRegistration extends javax.swing.JFrame {
         getContentPane().add(jButton_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 360, 130, -1));
 
         jButton_limpar.setBackground(new java.awt.Color(51, 51, 51));
-        jButton_limpar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_limpar.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jButton_limpar.setForeground(new java.awt.Color(204, 204, 204));
         jButton_limpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/clear.png"))); // NOI18N
         jButton_limpar.setText("Limpar");
@@ -172,81 +177,96 @@ public class CarRegistration extends javax.swing.JFrame {
         });
         getContentPane().add(jButton_limpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 430, 110, 40));
 
-        jTextField_motor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_motor.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_motor.setText("1.0 TURBO ");
         jTextField_motor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_motorActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField_motor, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 110, 30));
+        getContentPane().add(jTextField_motor, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, 110, 30));
 
-        jLabel_transmissao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_transmissao.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_transmissao.setText("Transmissao:");
         getContentPane().add(jLabel_transmissao, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 400, -1, 30));
 
-        jLabel_obs_carro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_obs_carro.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_obs_carro.setText("Obs:");
         getContentPane().add(jLabel_obs_carro, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 560, -1, 25));
         getContentPane().add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 815, 14));
 
-        jText_data_cadastro_carro.setText("21/02/2021");
+        jText_data_cadastro_carro.setFont(new java.awt.Font("Microsoft YaHei", 0, 12)); // NOI18N
+        jText_data_cadastro_carro.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        jText_data_cadastro_carro.setEnabled(false);
+        jText_data_cadastro_carro.setFocusable(false);
         jText_data_cadastro_carro.setMinimumSize(new java.awt.Dimension(6, 22));
         jText_data_cadastro_carro.setRequestFocusEnabled(false);
+        jText_data_cadastro_carro.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jText_data_cadastro_carroAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jText_data_cadastro_carro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jText_data_cadastro_carroActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_data_cadastro_carro, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 90, 23));
+        getContentPane().add(jText_data_cadastro_carro, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 90, 26));
 
-        jComboBox_combustivel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_combustivel.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_combustivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gasolina", "Alcool", "Diesel", "Gas/Alcool" }));
         getContentPane().add(jComboBox_combustivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 400, 100, 30));
 
-        jComboBox_qnt_passageiros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_qnt_passageiros.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_qnt_passageiros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2", "4", "5" }));
         jComboBox_qnt_passageiros.setSelectedIndex(2);
-        getContentPane().add(jComboBox_qnt_passageiros, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 40, 30));
+        getContentPane().add(jComboBox_qnt_passageiros, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 50, 30));
 
         jLabel_fundo.setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().add(jLabel_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 680));
 
-        jLabel_renavam.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_renavam.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_renavam.setText("Renavam:");
-        getContentPane().add(jLabel_renavam, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, -1, 30));
+        getContentPane().add(jLabel_renavam, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 480, 70, 30));
 
-        jLabel_cap_porta_malas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_cap_porta_malas.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_cap_porta_malas.setText("Cap. Porta Malas:");
-        getContentPane().add(jLabel_cap_porta_malas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 320, -1, 30));
+        getContentPane().add(jLabel_cap_porta_malas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, -1, 30));
 
-        jTextField_renavam.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_renavam.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_renavam.setText("BRA2E20");
         jTextField_renavam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_renavamActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField_renavam, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 480, 110, 30));
+        getContentPane().add(jTextField_renavam, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 480, 110, 30));
 
-        jLabel_modelo1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_modelo1.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_modelo1.setText("Cor:");
-        getContentPane().add(jLabel_modelo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, -1, 30));
+        getContentPane().add(jLabel_modelo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, -1, 30));
 
-        jTextField_modelo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_modelo.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_modelo.setText("Onix");
-        getContentPane().add(jTextField_modelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 110, 30));
+        getContentPane().add(jTextField_modelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 110, 30));
 
         jTextArea_obs_carro.setColumns(20);
+        jTextArea_obs_carro.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextArea_obs_carro.setRows(5);
         jTextArea_obs_carro.setText("the gray fox jumped over the lazy dog");
         jScrollPane1.setViewportView(jTextArea_obs_carro);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 560, 480, 90));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 560, 470, 90));
 
         jText_codigo.setBackground(new java.awt.Color(102, 102, 102));
+        jText_codigo.setFont(new java.awt.Font("Microsoft YaHei", 0, 12)); // NOI18N
         jText_codigo.setForeground(new java.awt.Color(204, 204, 204));
         jText_codigo.setText("00001");
+        jText_codigo.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         jText_codigo.setEnabled(false);
         jText_codigo.setMinimumSize(new java.awt.Dimension(6, 22));
         jText_codigo.setRequestFocusEnabled(false);
@@ -255,19 +275,24 @@ public class CarRegistration extends javax.swing.JFrame {
                 jText_codigoActionPerformed(evt);
             }
         });
-        getContentPane().add(jText_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 110, 23));
+        getContentPane().add(jText_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 110, 26));
 
-        jComboBox_cap_porta_malas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_cap_porta_malas.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_cap_porta_malas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pequeno", "Medio", "Grande" }));
-        getContentPane().add(jComboBox_cap_porta_malas, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 100, 30));
+        getContentPane().add(jComboBox_cap_porta_malas, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 320, 100, 30));
 
-        jLabel_km.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_km.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_km.setText("KM:");
         getContentPane().add(jLabel_km, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 480, -1, 30));
 
-        jTextField_cor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_cor.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_cor.setText("Branco");
-        getContentPane().add(jTextField_cor, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, 90, 30));
+        jTextField_cor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_corActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField_cor, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 250, 90, 30));
 
         try {
             jFormattedTextField_valor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.00")));
@@ -275,38 +300,40 @@ public class CarRegistration extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         jFormattedTextField_valor.setText("120");
-        jFormattedTextField_valor.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jFormattedTextField_valor.setFont(new java.awt.Font("Microsoft YaHei", 1, 13)); // NOI18N
         getContentPane().add(jFormattedTextField_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 570, 140, 35));
 
-        jComboBox_transmissao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_transmissao.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_transmissao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manual", "Automatico" }));
         getContentPane().add(jComboBox_transmissao, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 400, 100, 30));
 
+        jLabel_codigo.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_codigo.setText("Código:");
-        getContentPane().add(jLabel_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 23));
+        getContentPane().add(jLabel_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 26));
 
-        jComboBox_qnt_portas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_qnt_portas.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_qnt_portas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2", "3", "4", "5" }));
         jComboBox_qnt_portas.setSelectedIndex(2);
-        getContentPane().add(jComboBox_qnt_portas, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 320, 40, 30));
+        getContentPane().add(jComboBox_qnt_portas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 320, 50, 30));
 
-        jLabel_modelo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_modelo.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_modelo.setText("Modelo:");
-        getContentPane().add(jLabel_modelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, -1, 30));
+        getContentPane().add(jLabel_modelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, -1, 30));
 
-        jLabel_data.setText("DATA:");
-        getContentPane().add(jLabel_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, -1, 23));
+        jLabel_data.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
+        jLabel_data.setText("Data:");
+        getContentPane().add(jLabel_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(212, 200, 40, 26));
         getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 815, 14));
 
-        jLabel_motor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_motor.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_motor.setText("Motor:");
         getContentPane().add(jLabel_motor, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, 30));
 
-        jLabel_qnt_passageiros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_qnt_passageiros.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_qnt_passageiros.setText("Qnt. Passageiros:");
         getContentPane().add(jLabel_qnt_passageiros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, 30));
 
-        jTextField_chassi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_chassi.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_chassi.setText("BRA2E20");
         jTextField_chassi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -315,28 +342,28 @@ public class CarRegistration extends javax.swing.JFrame {
         });
         getContentPane().add(jTextField_chassi, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, 110, 30));
 
-        jLabel_tracao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_tracao.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_tracao.setText("Tração:");
-        getContentPane().add(jLabel_tracao, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 320, -1, 30));
+        getContentPane().add(jLabel_tracao, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 320, -1, 30));
 
-        jComboBox_tracao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_tracao.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_tracao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dianteira", "Traseira", "4x4", "4x2" }));
-        getContentPane().add(jComboBox_tracao, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 320, 100, 30));
+        getContentPane().add(jComboBox_tracao, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 320, 100, 30));
 
-        jLabel_chassi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_chassi.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_chassi.setText("Chassi:");
-        getContentPane().add(jLabel_chassi, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 480, -1, 30));
+        getContentPane().add(jLabel_chassi, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 50, 30));
 
-        jTextField_placa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_placa.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_placa.setText("BRA2E20");
         jTextField_placa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_placaActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField_placa, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 480, 90, 30));
+        getContentPane().add(jTextField_placa, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 480, 90, 30));
 
-        jTextField_km.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_km.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_km.setText("0");
         jTextField_km.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,29 +372,29 @@ public class CarRegistration extends javax.swing.JFrame {
         });
         getContentPane().add(jTextField_km, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 480, 110, 30));
 
-        jLabel_qnt_portas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_qnt_portas.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_qnt_portas.setText("Qnt. Portas:");
-        getContentPane().add(jLabel_qnt_portas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, 30));
+        getContentPane().add(jLabel_qnt_portas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 320, -1, 30));
 
-        jLabel_combustivel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_combustivel.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_combustivel.setText("Combustivel:");
         getContentPane().add(jLabel_combustivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 400, -1, 30));
 
-        jTextField_potencia.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_potencia.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_potencia.setText("116 CV");
         jTextField_potencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_potenciaActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField_potencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 110, 30));
+        getContentPane().add(jTextField_potencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 110, 30));
         getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 815, 14));
 
-        jLabel_valor.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel_valor.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_valor.setText("Valor Aluguel R$:");
         getContentPane().add(jLabel_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, -1, 35));
 
-        jTextField_marca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_marca.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_marca.setText("Chevrolet");
         jTextField_marca.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -379,40 +406,40 @@ public class CarRegistration extends javax.swing.JFrame {
                 jTextField_marcaActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField_marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 110, 30));
+        getContentPane().add(jTextField_marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 110, 30));
 
-        jLabel_marca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_marca.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_marca.setText("Marca:");
         getContentPane().add(jLabel_marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, 30));
 
-        jLabel_placa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_placa.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_placa.setText("Placa:");
         getContentPane().add(jLabel_placa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, -1, 30));
 
-        jLabel_ano.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_ano.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_ano.setText("Ano:");
-        getContentPane().add(jLabel_ano, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, -1, 30));
+        getContentPane().add(jLabel_ano, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, -1, 30));
 
-        jTextField_ano.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField_ano.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jTextField_ano.setText("2021");
-        getContentPane().add(jTextField_ano, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, 60, 30));
+        getContentPane().add(jTextField_ano, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 60, 30));
 
-        jLabel_potencia.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_potencia.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_potencia.setText("Potencia:");
-        getContentPane().add(jLabel_potencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, -1, 30));
+        getContentPane().add(jLabel_potencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, -1, 30));
 
-        jLabel_categoria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_categoria.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jLabel_categoria.setText("Categoria:");
-        getContentPane().add(jLabel_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 250, -1, 30));
+        getContentPane().add(jLabel_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 250, -1, 30));
 
-        jComboBox_categoria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_categoria.setFont(new java.awt.Font("Microsoft YaHei", 0, 13)); // NOI18N
         jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HATCH", "SEDAM", "SUV" }));
         jComboBox_categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_categoriaActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 250, 90, 30));
+        getContentPane().add(jComboBox_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 250, 90, 30));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Background.jpg"))); // NOI18N
         background.setText("jLabel1");
@@ -430,9 +457,9 @@ public class CarRegistration extends javax.swing.JFrame {
 
         CarDao carDao = DaoFactory.createCarDao();
 
-        Car car = new Car();       
+        Car car = new Car();
 
-        CarCategory cat = new CarCategory(jComboBox_categoria.getSelectedIndex()+1);
+        CarCategory cat = new CarCategory(jComboBox_categoria.getSelectedIndex() + 1);
 
         car.setMarca(jTextField_marca.getText());
         car.setModelo(jTextField_modelo.getText());
@@ -454,7 +481,7 @@ public class CarRegistration extends javax.swing.JFrame {
         car.setValorAluguel(Double.parseDouble(jFormattedTextField_valor.getText()));
         car.setCarCategory(cat);
 
-        carDao.insert(car);     
+        carDao.insert(car);
 
 
     }//GEN-LAST:event_jButton_salvarActionPerformed
@@ -522,6 +549,17 @@ public class CarRegistration extends javax.swing.JFrame {
     private void jComboBox_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_categoriaActionPerformed
 
     }//GEN-LAST:event_jComboBox_categoriaActionPerformed
+
+    private void jTextField_corActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_corActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_corActionPerformed
+
+    private void jText_data_cadastro_carroAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jText_data_cadastro_carroAncestorAdded
+       
+        String datahj = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        jText_data_cadastro_carro.setText(datahj);
+    }//GEN-LAST:event_jText_data_cadastro_carroAncestorAdded
 
     /**
      * @param args the command line arguments
