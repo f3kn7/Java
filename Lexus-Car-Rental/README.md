@@ -3,6 +3,6 @@
 </div>
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/70611621/197594223-8112f124-ac85-443d-9711-c6be9aef6b5a.png"/>
+<img src="https://user-images.githubusercontent.com/70611621/207488177-f89b7686-d5ac-4b91-9c69-a68cfd9cbfae.png"/>
 </div>
 
