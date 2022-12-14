@@ -31,6 +31,7 @@ public class RentalCar extends javax.swing.JFrame {
      */
     public RentalCar() {
         initComponents();
+        Limpar();
         desabilitarComboBox();
     }
 
@@ -604,15 +605,51 @@ public class RentalCar extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_consultarActionPerformed
 
     private void jComboBox_modelo_carro_suvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_suvActionPerformed
-        jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_suv.getSelectedItem());
+
+        if (jCheckBox_hatch.isSelected()) {
+
+            jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_hatch.getSelectedItem());
+
+        } else if (jCheckBox_sedam.isSelected()) {
+
+            jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_sedam.getSelectedItem());
+
+        } else if (jCheckBox_suv.isSelected()) {
+
+            jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_suv.getSelectedItem());
+        }
     }//GEN-LAST:event_jComboBox_modelo_carro_suvActionPerformed
 
     private void jComboBox_modelo_carro_sedamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_sedamActionPerformed
-        jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_sedam.getSelectedItem());
+
+        if (jCheckBox_hatch.isSelected()) {
+
+            jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_hatch.getSelectedItem());
+        } else if (jCheckBox_sedam.isSelected()) {
+
+            jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_sedam.getSelectedItem());
+
+        } else if (jCheckBox_suv.isSelected()) {
+
+            jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_suv.getSelectedItem());
+        }
+
     }//GEN-LAST:event_jComboBox_modelo_carro_sedamActionPerformed
 
     private void jComboBox_modelo_carro_hatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_hatchActionPerformed
-        jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_hatch.getSelectedItem());
+
+        if (jCheckBox_hatch.isSelected()) {
+            jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_hatch.getSelectedItem());
+
+        } else if (jCheckBox_sedam.isSelected()) {
+
+            jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_sedam.getSelectedItem());
+
+        } else if (jCheckBox_suv.isSelected()) {
+
+            jLabel_veiculo_escolhido.setText((String) jComboBox_modelo_carro_suv.getSelectedItem());
+        }
+
     }//GEN-LAST:event_jComboBox_modelo_carro_hatchActionPerformed
 
     private void jComboBox_ClienteAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBox_ClienteAncestorAdded
@@ -632,19 +669,25 @@ public class RentalCar extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox_ClienteAncestorAdded
 
     private void jComboBox_modelo_carro_hatchItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_hatchItemStateChanged
-        pegarValorCarroHatch();
-        jFormattedTextField_valor.setText("");
+        if (jCheckBox_hatch.isSelected()) {
+            jFormattedTextField_valor.setText("");
+            pegarValorCarroHatch();
+        }
     }//GEN-LAST:event_jComboBox_modelo_carro_hatchItemStateChanged
 
     private void jComboBox_modelo_carro_sedamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_sedamItemStateChanged
-        pegarValorCarroSedam();
-        jFormattedTextField_valor.setText("");
+        if (jCheckBox_sedam.isSelected()) {
+            jFormattedTextField_valor.setText("");
+            pegarValorCarroSedam();
+        }
     }//GEN-LAST:event_jComboBox_modelo_carro_sedamItemStateChanged
 
     private void jComboBox_modelo_carro_suvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_suvItemStateChanged
-        pegarValorCarroSuv();
-        jFormattedTextField_valor.setText("");
+        if (jCheckBox_suv.isSelected()) {
+            jFormattedTextField_valor.setText("");
+            pegarValorCarroSuv();
 
+        }
     }//GEN-LAST:event_jComboBox_modelo_carro_suvItemStateChanged
 
     private void jFormattedTextField_data_retiradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField_data_retiradaKeyTyped
@@ -667,7 +710,7 @@ public class RentalCar extends javax.swing.JFrame {
     }//GEN-LAST:event_jText_dataAncestorAdded
 
     private void jComboBox_modelo_carro_hatchAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBox_modelo_carro_hatchAncestorAdded
-        
+
         //Lotando o comboBox com os modelos da categoria #HATCH cadastrados no banco de dados
         CarDao carDao = DaoFactory.createCarDao();
 
